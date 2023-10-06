@@ -9,30 +9,51 @@ function App() {
   const [count, setCount] = useState(0);
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
+  const [userId, setUserId] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    liftInit();
+    //liftInit();
+    liftInit2();
   }, []);
 
-  const liftInit = async () => {
-    await liff
-      .init({
-        liffId: "2001035033-w8g1yvBj",
-      })
-      .then(async (res) => {
-        const userData = await liff.getProfile();
-        setName(userData.displayName)
-        setImage(userData.pictureUrl)
-        console.log(res);
-        // setMessage("LIFF init succeeded.");
-      })
-      .catch((e) => {
-        // setMessage("LIFF init failed.");
-        // setError(`${e}`);
-      });
+  const liftInit2 = async () => {
+    await liff.init({
+      liffId: "2001035033-w8g1yvBj",
+    });
+
+    liff.ready.then(() => {
+      getUser()
+    });
   };
+
+  const getUser = async () => {
+    const userData = await liff.getProfile();
+    setName(userData.displayName);
+    setImage(userData.pictureUrl);
+    setImage(userData.pictureUrl);
+    setUserId(userData.userId);
+  };
+
+  // const liftInit = async () => {
+  //   await liff
+  //     .init({
+  //       liffId: "2001035033-w8g1yvBj",
+  //     })
+  //     .then(async (res) => {
+  //       const userData = await liff.getProfile();
+  //       setName(userData.displayName);
+  //       setImage(userData.pictureUrl);
+  //       console.log(res);
+  //       // setMessage("LIFF init succeeded.");
+  //     })
+  //     .catch((e) => {
+  //       // setMessage("LIFF init failed.");
+  //       // setError(`${e}`);
+  //     });
+  // };
+
   return (
     <>
       <div className="w-full">
@@ -85,6 +106,7 @@ function App() {
         </div>
         <img src={image} className="rounded-full h-24"></img>
         {name}
+        {userId}
       </div>
     </>
   );
