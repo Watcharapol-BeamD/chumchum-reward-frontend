@@ -15,8 +15,8 @@ const RegisterPage = () => {
   const [retailName, setRetailerName] = useState("");
   const [bplusCode, setBplusCode] = useState("");
   const liftId = "2001035033-w8g1yvBj";
-  const [isRegister, setIsRegister] = useState(false)
-
+  const [isRegister, setIsRegister] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleRedirectIfRegister = () => {
@@ -36,7 +36,7 @@ const RegisterPage = () => {
     liff.ready
       .then(() => {
         getUser();
-        checkIsRegister()
+         
       })
       .catch((err) => {
         console.log(err);
@@ -98,8 +98,8 @@ const RegisterPage = () => {
   const sendData = async (userData) => {
     console.log(userData);
     try {
-      await liffApiInstance.post("/register", userData).then(()=>{
-        handleRedirectIfRegister()
+      await liffApiInstance.post("/register", userData).then(() => {
+        handleRedirectIfRegister();
       });
     } catch (err) {
       console.log(err);
@@ -113,14 +113,12 @@ const RegisterPage = () => {
     return liffApiInstance
       .post("/is_register", userData)
       .then((res) => {
-        setIsRegister(res.data.isRegister)
+        setIsRegister(res.data.isRegister);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
- 
 
   const renderRegister = () => {
     return (
@@ -133,7 +131,7 @@ const RegisterPage = () => {
             <p className="text-white ">Chum Chum Reward</p>
           </div>
 
-          <form className="space-y-2" onSubmit={(e)=>handleSubmit(e)}>
+          <form className="space-y-2" onSubmit={(e) => handleSubmit(e)}>
             <div>
               <p className="font-bold text-lg text-center mt-2">ลงทะเบียน</p>
             </div>
@@ -181,8 +179,8 @@ const RegisterPage = () => {
         <img src={image} className="rounded-full h-24"></img>
         <p>name: {name}</p>
 
-        <p>userid: {userId}</p> 
-        <p> {isRegister}</p> 
+        <p>userid: {userId}</p>
+        <p> {isRegister}</p>
         <button
           className="bg-red-200 h-10 w-10"
           onClick={checkIsRegister}
@@ -192,7 +190,12 @@ const RegisterPage = () => {
     );
   };
 
-  return <div className="w-full h-full ">{isRegister?handleRedirectIfRegister():renderRegister()}</div>;
+  return (
+    <div className="w-full h-full "> 
+      {renderRegister()}
+        {/* {isLoading ? handleRedirectIfRegister() : renderRegister()} */}
+    </div>
+  );
 };
 
 export default RegisterPage;
