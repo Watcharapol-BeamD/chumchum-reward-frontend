@@ -4,6 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import ChumChumIcon from "../src/assets/ChumChumLogo-1.png";
 import liff from "@line/liff";
+import { liffApiInstance } from "./services/liffApi";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -12,6 +13,10 @@ function App() {
   const [userId, setUserId] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+  const [telePhone, setTelePhone] = useState("");
+  const [retailName, setRetailerName] = useState("");
+  const [bplusCode, setBplusCode] = useState("");
+  const liftId = "2001035033-w8g1yvBj"
 
   useEffect(() => {
     //liftInit();
@@ -24,14 +29,13 @@ function App() {
     });
 
     liff.ready.then(() => {
-      getUser()
+      getUser();
     });
   };
 
   const getUser = async () => {
     const userData = await liff.getProfile();
     setName(userData.displayName);
-    setImage(userData.pictureUrl);
     setImage(userData.pictureUrl);
     setUserId(userData.userId);
   };
@@ -54,6 +58,37 @@ function App() {
   //     });
   // };
 
+  // const handleName = (e) => {
+  //   setName(e.target.value);
+  // };
+
+  const handleTelePhone = (e) => {
+    setTelePhone(e.target.value);
+  };
+
+  // const handleUserId = (e) => {
+  //   setUserId(e.target.value);
+  // };
+
+  const handleRetailerName = (e) => {
+    setRetailerName(e.target.value);
+  };
+
+  const handleBplusCode = (e) => {
+    setBplusCode(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("aaaaa");
+    const userData = {
+      user_id: userId,
+      retailName,
+    };
+
+    // return liffApiInstance.post("/register", userData);
+  };
+
   return (
     <>
       <div className="w-full">
@@ -65,7 +100,7 @@ function App() {
             <p className="text-white ">Chum Chum Reward</p>
           </div>
 
-          <form className="space-y-2">
+          <form className="space-y-2" onSubmit={handleSubmit}>
             <div>
               <p className="font-bold text-lg text-center mt-2">ลงทะเบียน</p>
             </div>
@@ -76,6 +111,7 @@ function App() {
                 id="telephone"
                 type="tel"
                 className="border rounded-md h-10 w-full  p-2"
+                onChange={handleTelePhone}
               />
             </div>
             <div className=" ">
@@ -84,6 +120,7 @@ function App() {
               <input
                 id="Username"
                 className="border rounded-md h-10 w-full  p-2"
+                onChange={handleRetailerName}
               />
             </div>
             <div className=" ">
@@ -92,6 +129,7 @@ function App() {
               <input
                 id="Username"
                 className="border rounded-md h-10 w-full  p-2"
+                onChange={handleBplusCode}
               />
             </div>
             <div className="flex justify-center">
