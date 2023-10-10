@@ -6,6 +6,7 @@ import liff from "@line/liff";
 import { liffApiInstance } from "./services/liffApi";
 import { Route, Router, Routes } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
+import RewardPage from "./pages/RewardPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<RegisterPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/reward" element={<RewardPage />} />
       </Routes>
     </>
   );
