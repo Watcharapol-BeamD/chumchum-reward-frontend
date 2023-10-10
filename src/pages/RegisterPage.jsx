@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../storage/slices/userSlice";
+import { registerUser } from "../storage/slices/authSlice";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -28,15 +29,14 @@ const RegisterPage = () => {
     liftInit();
   }, []);
 
- 
   const getUser = async () => {
     const userData = await liff.getProfile();
     console.log(userData);
     setName(userData.displayName);
     setImage(userData.pictureUrl);
     setUserId(userData.userId);
-    // dispatch(setUser(userData));
- 
+    dispatch(setUser(userData));
+
     setIsLoading(false);
   };
 
@@ -47,9 +47,9 @@ const RegisterPage = () => {
       })
       .then(async () => {
         if (liff.isLoggedIn()) {
-          getUser()
-        }else{
-          liff.login()
+          getUser();
+        } else {
+          liff.login();
         }
 
         // setMessage("LIFF init succeeded.");
@@ -81,8 +81,9 @@ const RegisterPage = () => {
       mobile_number: mobileNumber,
       bplus_code: bplusCode,
     };
-
-    sendData(userData);
+    dispatch(registerUser(userData)).unwrap().then(()=>{
+      handleRedirectIfRegister()
+    })
   };
 
   const sendData = async (userData) => {

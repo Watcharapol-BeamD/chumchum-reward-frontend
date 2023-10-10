@@ -1,11 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const RewardPage = () => {
+  const { user } = useSelector((state) => state.user);
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
 
   const renderReward = () => {
     return (
       <div className="bg-purple-200 h-screen p-2">
+        {console.log(user)}
         <div className="bg-white w-full h-40 p-10 rounded-lg"> </div>
         <p className="text-center">สวัสดีตอนเย็น</p>
         <div className="space-y-2">
