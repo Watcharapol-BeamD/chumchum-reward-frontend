@@ -4,13 +4,13 @@ import { liffApiInstance } from "../services/liffApi";
 import liff from "@line/liff";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../storage/slices/userSlice";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
-  const [userId, setUserId] = useState("1234");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [userId, setUserId] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [retailName, setRetailerName] = useState("");
   const [bplusCode, setBplusCode] = useState("");
@@ -18,37 +18,26 @@ const RegisterPage = () => {
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleRedirectIfRegister = () => {
     navigate("/reward");
   };
 
   useEffect(() => {
-    // liftInit();
-    liftInit2();
+    liftInit();
   }, []);
 
-  const liftInit2 = async () => {
-    await liff.init({
-      liffId: "2001035033-w8g1yvBj",
-    });
-
-    liff.ready
-      .then(() => {
-        getUser();
-         
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+ 
   const getUser = async () => {
     const userData = await liff.getProfile();
     console.log(userData);
     setName(userData.displayName);
     setImage(userData.pictureUrl);
     setUserId(userData.userId);
+    // dispatch(setUser(userData));
+ 
+    setIsLoading(false);
   };
 
   const liftInit = async () => {
@@ -56,12 +45,13 @@ const RegisterPage = () => {
       .init({
         liffId: "2001035033-w8g1yvBj",
       })
-      .then(async (res) => {
-        const userData = await liff.getProfile();
-        setName(userData.displayName);
-        setImage(userData.pictureUrl);
-        setUserId(userData.userId);
-        console.log(res);
+      .then(async () => {
+        if (liff.isLoggedIn()) {
+          getUser()
+        }else{
+          liff.login()
+        }
+
         // setMessage("LIFF init succeeded.");
       })
       .catch((e) => {
@@ -191,9 +181,9 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="w-full h-full "> 
+    <div className="w-full h-full ">
       {renderRegister()}
-        {/* {isLoading ? handleRedirectIfRegister() : renderRegister()} */}
+      {/* {isLoading ? handleRedirectIfRegister() : renderRegister()} */}
     </div>
   );
 };

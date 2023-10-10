@@ -8,20 +8,26 @@ const ProtectRouteOnRegister = ({ redirectPath = "/reward", children }) => {
   const navigate = useNavigate(); // Get the navigation function from react-router-dom
 
   useEffect(() => {
-    liftInit2();
+    liftInit();
   }, []);
 
-  const liftInit2 = async () => {
-    await liff.init({
-      liffId: "2001035033-w8g1yvBj",
-    });
-
-    liff.ready
-      .then(() => {
-        getUser();
+  const liftInit = async () => {
+    await liff
+      .init({
+        liffId: "2001035033-w8g1yvBj",
       })
-      .catch((err) => {
-        console.log(err);
+      .then(async () => {
+        if (liff.isLoggedIn()) {
+          getUser()
+        }else{
+          liff.login()
+        }
+
+        // setMessage("LIFF init succeeded.");
+      })
+      .catch((e) => {
+        // setMessage("LIFF init failed.");
+        // setError(`${e}`);
       });
   };
 
