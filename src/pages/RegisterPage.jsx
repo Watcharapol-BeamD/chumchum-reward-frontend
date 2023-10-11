@@ -14,11 +14,12 @@ const RegisterPage = () => {
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
-  const [retailName, setRetailerName] = useState("");
+  const [retailerName, setRetailerName] = useState("");
   const [bplusCode, setBplusCode] = useState("");
   const liftId = "2001035033-w8g1yvBj";
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [formMsg, setFormMsg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -71,40 +72,36 @@ const RegisterPage = () => {
 
   const handleMobileNumber = (e) => {
     setMobileNumber(e.target.value);
+    setFormMsg("");
   };
 
   const handleRetailerName = (e) => {
     setRetailerName(e.target.value);
+    setFormMsg("");
   };
 
   const handleBplusCode = (e) => {
     setBplusCode(e.target.value);
+    setFormMsg("");
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const userData = {
-      user_id: userId,
-      retailer_name: retailName,
-      mobile_number: mobileNumber,
-      bplus_code: bplusCode,
-    };
-    dispatch(registerUser(userData))
-      .unwrap()
-      .then(() => {
-        handleRedirectIfRegister();
-      });
-  };
-
-  const sendData = async (userData) => {
-    console.log(userData);
-    try {
-      await liffApiInstance.post("/register", userData).then(() => {
-        handleRedirectIfRegister();
-      });
-    } catch (err) {
-      console.log(err);
+    if (!mobileNumber || !retailerName || !bplusCode) {
+      setFormMsg("Please fill in all required fields.");
+    } else {
+      const userData = {
+        user_id: userId,
+        retailer_name: retailerName,
+        mobile_number: mobileNumber,
+        bplus_code: bplusCode,
+      };
+      dispatch(registerUser(userData))
+        .unwrap()
+        .then(() => {
+          handleRedirectIfRegister();
+        });
     }
   };
 
@@ -127,10 +124,10 @@ const RegisterPage = () => {
       <div className="w-full">
         <div className="sm:container mx-auto p-4">
           <div className="flex justify-center items-center bg-purple-600 p-2 rounded-lg gap-1">
-            <div className="flex justify-center rounded-md h-10 w-10 bg-green-300">
+            <div className="flex justify-center rounded-md h-10 w-10 bg-green-400">
               <img src={ChumChumIcon} />
             </div>
-            <p className="text-white ">Chum Chum Reward</p>
+            <p className="text-black ">Chum Chum Reward</p>
           </div>
 
           <form className="space-y-2" onSubmit={(e) => handleSubmit(e)}>
@@ -155,7 +152,7 @@ const RegisterPage = () => {
                 id="retailerName"
                 className="border rounded-md h-10 w-full  p-2"
                 onChange={handleRetailerName}
-                value={retailName}
+                value={retailerName}
               />
             </div>
             <div className=" ">
@@ -168,6 +165,8 @@ const RegisterPage = () => {
                 value={bplusCode}
               />
             </div>
+            <p className="text-red-500 text-center"> {formMsg && formMsg}</p>
+
             <div className="flex justify-center">
               <button
                 className="p-2 bg-purple-600 rounded-lg text-white "
@@ -195,7 +194,7 @@ const RegisterPage = () => {
   return (
     <div className="w-full h-full ">
       {/* {renderRegister()} */}
-      {true ? <OnLoadingScreen/> : renderRegister()}
+      {isLoading ? <OnLoadingScreen /> : renderRegister()}
     </div>
   );
 };
