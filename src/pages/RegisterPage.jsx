@@ -195,7 +195,7 @@ const RegisterPage = () => {
   return (
     <div className="w-full h-full ">
       {/* {renderRegister()} */}
-      {isLoading ? <OnLoadingScreen/> : renderRegister()}
+      {true ? <OnLoadingScreen/> : renderRegister()}
     </div>
   );
 };
