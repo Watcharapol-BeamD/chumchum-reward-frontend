@@ -4,12 +4,13 @@ import { liffApiInstance } from "../services/liffApi";
 import liff from "@line/liff";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../storage/slices/userSlice";
 import { checkUserRegister, registerUser } from "../storage/slices/authSlice";
 import OnLoadingScreen from "../components/OnLoadingScreen";
 
 const RegisterPage = () => {
+  const { user } = useSelector((state) => state.user);
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState("");
@@ -177,23 +178,17 @@ const RegisterPage = () => {
             </div>
           </form>
         </div>
-        <img src={image} className="rounded-full h-24"></img>
-        <p>name: {name}</p>
 
-        <p>userid: {userId}</p>
-        <p> {isRegister}</p>
-        {/* <button
-          className="bg-red-200 h-10 w-10"
-          onClick={checkIsRegister}
-        ></button> */}
-        {isRegister}
+        <img src={user.pictureUrl} className="rounded-full h-24"></img>
+        <p>name: {user.displayName}</p>
+        <p>userid: {user.userId}</p>
       </div>
     );
   };
 
   return (
     <div className="w-full h-full ">
-      {/* {renderRegister()} */}
+   
       {isLoading ? <OnLoadingScreen /> : renderRegister()}
     </div>
   );

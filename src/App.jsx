@@ -9,14 +9,16 @@ import RegisterPage from "./pages/RegisterPage";
 import RewardPage from "./pages/RewardPage";
 import ProtectRouteOnRegister from "./components/ProtectRouteOnRegister";
 import HomePage from "./pages/HomePage";
+import RewardDetailPage from "./pages/RewardDetailpage";
 
 function App() {
   return (
-    <>
+    <div className="font-prompt">
       <Routes>
         <Route path="/" element={<RegisterPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/reward" element={<RewardPage />} />
+        <Route path="/reward/details" element={<RewardDetailPage />} />
         {/* 
         <Route element={<ProtectRouteOnRegister />}>
           <Route path="/" element={<HomePage />} />
@@ -24,7 +26,7 @@ function App() {
         </Route>
         <Route path="/reward" element={<RewardPage />} /> */}
       </Routes>
-    </>
+    </div>
   );
 }
 
