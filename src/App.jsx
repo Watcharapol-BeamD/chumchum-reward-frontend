@@ -8,17 +8,21 @@ import { Route, Router, Routes } from "react-router-dom";
 import RegisterPage from "./pages/RegisterPage";
 import RewardPage from "./pages/RewardPage";
 import ProtectRouteOnRegister from "./components/ProtectRouteOnRegister";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <>
       <Routes>
+        <Route path="/" element={<RegisterPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/reward" element={<RewardPage />} />
+        {/* 
         <Route element={<ProtectRouteOnRegister />}>
-          <Route path="/" element={<RegisterPage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
         </Route>
-
-        <Route path="/reward" element={<RewardPage />} />
+        <Route path="/reward" element={<RewardPage />} /> */}
       </Routes>
     </>
   );

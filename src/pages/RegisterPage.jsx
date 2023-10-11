@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../storage/slices/userSlice";
-import { registerUser } from "../storage/slices/authSlice";
+import { checkUserRegister, registerUser } from "../storage/slices/authSlice";
+import OnLoadingScreen from "../components/OnLoadingScreen";
 
 const RegisterPage = () => {
   const [name, setName] = useState("");
@@ -29,17 +30,6 @@ const RegisterPage = () => {
     liftInit();
   }, []);
 
-  const getUser = async () => {
-    const userData = await liff.getProfile();
-    console.log(userData);
-    setName(userData.displayName);
-    setImage(userData.pictureUrl);
-    setUserId(userData.userId);
-    dispatch(setUser(userData));
-
-    setIsLoading(false);
-  };
-
   const liftInit = async () => {
     await liff
       .init({
@@ -57,6 +47,25 @@ const RegisterPage = () => {
       .catch((e) => {
         // setMessage("LIFF init failed.");
         // setError(`${e}`);
+      });
+  };
+
+  const getUser = async () => {
+    const userData = await liff.getProfile();
+    setName(userData.displayName);
+    setImage(userData.pictureUrl);
+    setUserId(userData.userId);
+    dispatch(setUser(userData));
+    console.log(userData.userId);
+
+    dispatch(checkUserRegister({ user_id: userData.userId }))
+      .unwrap()
+      .then((res) => {
+        if (res.isRegister) {
+          handleRedirectIfRegister();
+        } else {
+          setIsLoading(false);
+        }
       });
   };
 
@@ -81,9 +90,11 @@ const RegisterPage = () => {
       mobile_number: mobileNumber,
       bplus_code: bplusCode,
     };
-    dispatch(registerUser(userData)).unwrap().then(()=>{
-      handleRedirectIfRegister()
-    })
+    dispatch(registerUser(userData))
+      .unwrap()
+      .then(() => {
+        handleRedirectIfRegister();
+      });
   };
 
   const sendData = async (userData) => {
@@ -97,19 +108,19 @@ const RegisterPage = () => {
     }
   };
 
-  const checkIsRegister = () => {
-    const userData = {
-      user_id: userId,
-    };
-    return liffApiInstance
-      .post("/is_register", userData)
-      .then((res) => {
-        setIsRegister(res.data.isRegister);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const checkIsRegister = () => {
+  //   const userData = {
+  //     user_id: userId,
+  //   };
+  //   return liffApiInstance
+  //     .post("/is_register", userData)
+  //     .then((res) => {
+  //       setIsRegister(res.data.isRegister);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const renderRegister = () => {
     return (
@@ -172,10 +183,10 @@ const RegisterPage = () => {
 
         <p>userid: {userId}</p>
         <p> {isRegister}</p>
-        <button
+        {/* <button
           className="bg-red-200 h-10 w-10"
           onClick={checkIsRegister}
-        ></button>
+        ></button> */}
         {isRegister}
       </div>
     );
@@ -183,8 +194,8 @@ const RegisterPage = () => {
 
   return (
     <div className="w-full h-full ">
-      {renderRegister()}
-      {/* {isLoading ? handleRedirectIfRegister() : renderRegister()} */}
+      {/* {renderRegister()} */}
+      {isLoading ? <OnLoadingScreen/> : renderRegister()}
     </div>
   );
 };
