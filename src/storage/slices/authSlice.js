@@ -9,7 +9,7 @@ const initialState = {
 };
 
 export const registerUser = createAsyncThunk(
-  "user/registerUser",
+  "auth/registerUser",
   async (userData, { rejectWithValue }) => {
     try {
       console.log(userData)
@@ -23,7 +23,7 @@ export const registerUser = createAsyncThunk(
 );
 
 export const checkUserRegister = createAsyncThunk(
-  "user/checkUserRegister",
+  "auth/checkUserRegister",
   async (userData, { rejectWithValue }) => {
     try {
       const res = await liffApiInstance.post(`/is_register`, userData);

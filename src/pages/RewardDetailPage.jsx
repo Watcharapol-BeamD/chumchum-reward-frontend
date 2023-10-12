@@ -1,9 +1,73 @@
-import React from "react";
+import React, { useEffect } from "react";
 import productImage from "../assets/waterpurifier.webp";
 import chumchumBg from "../assets/chumchum-top-bg.jpg";
+import { useDispatch, useSelector } from "react-redux";
+import { getRedeem, setUser } from "./../storage/slices/userSlice";
+import liff from "@line/liff";
 
 const RewardDetailPage = () => {
+  const { user } = useSelector((state) => state.user);
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    liftInit();
+  }, []);
+
+  const liftInit = async () => {
+    await liff
+      .init({
+        liffId: "2001035033-w8g1yvBj",
+      })
+      .then(async () => {
+        if (liff.isLoggedIn()) {
+          getUser();
+        } else {
+          liff.login();
+        }
+        // setMessage("LIFF init succeeded.");
+      })
+      .catch((e) => {
+        // setMessage("LIFF init failed.");
+        // setError(`${e}`);
+      });
+  };
+
+  
+  const getUser = async () => {
+    const userData = await liff.getProfile();
+
+    dispatch(setUser(userData));
+  };
+
+  function getFormattedTimestamp() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+  
+    const formattedTimestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return formattedTimestamp;
+  }
+  
+  const timestamp = getFormattedTimestamp();
+  console.log(timestamp);
+  
+
+
+  const handleRedeemReward = () => {
+    console.log(user)
+    const userData = {
+      user_id: user.userId,
+      reward_name: "xiaomi air purify",
+      quantity: 1,
+      timestamp: timestamp,
+    };
+    dispatch(getRedeem(userData));
+  };
 
   const renderRewardDetails = () => {
     return (
@@ -32,7 +96,7 @@ const RewardDetailPage = () => {
             หรือชดเชยความเสียหายดังกล่าว ห้างฯ หรือการเปลี่ยนแปลงเงื่อนไข
             โดยไม่แจ้งให้ทราบล่วงหน้า สอบถามรายละเอียดเพิ่มเติม
             สามารถติดต่อได้ที่แผนกลูกค้าสัมพันธ์ในเครือเดอะมอลล์ กรุ๊ป ทุกสาขา
-          </p>{" "}
+          </p>
           <p className="p-1 px-4 ">
             บัตรกำนัลใช้ชำระค่าสินค้าที่
             ดีพาร์ทเม้นท์สโตร์และซูเปอร์มาร์เก็ตในเครือเดอะมอลล์ กรุ๊ป ทุกสาขา
@@ -48,7 +112,10 @@ const RewardDetailPage = () => {
           </p>
         </div>
         <div className="flex justify-center py-10   relative   ">
-          <button className="bg-purple-600 h-12 w-56 rounded-lg text-white fixed bottom-6">
+          <button
+            className="bg-purple-600 h-12 w-56 rounded-lg text-white fixed bottom-6"
+            onClick={handleRedeemReward}
+          >
             แลกของรางวัล
           </button>
         </div>
