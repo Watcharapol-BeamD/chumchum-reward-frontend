@@ -51,7 +51,7 @@ const RegisterPage = () => {
         // setError(`${e}`);
       });
   };
-
+ 
   const getUser = async () => {
     const userData = await liff.getProfile();
     setName(userData.displayName);

@@ -9,7 +9,7 @@ const initialState = {
   displayName: "",
   pictureUrl: "",
   userId: "",
-  user: [],
+  user: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):null
 };
 
 export const getRedeem = createAsyncThunk(
@@ -31,6 +31,7 @@ const userSlice = createSlice({
     setUser: (state, action) => {
       console.log(action);
       state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
   },
   extraReducers: (builder) => {

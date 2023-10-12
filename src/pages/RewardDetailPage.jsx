@@ -10,56 +10,25 @@ const RewardDetailPage = () => {
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    liftInit();
-  }, []);
-
-  const liftInit = async () => {
-    await liff
-      .init({
-        liffId: "2001035033-w8g1yvBj",
-      })
-      .then(async () => {
-        if (liff.isLoggedIn()) {
-          getUser();
-        } else {
-          liff.login();
-        }
-        // setMessage("LIFF init succeeded.");
-      })
-      .catch((e) => {
-        // setMessage("LIFF init failed.");
-        // setError(`${e}`);
-      });
-  };
-
-  
-  const getUser = async () => {
-    const userData = await liff.getProfile();
-
-    dispatch(setUser(userData));
-  };
 
   function getFormattedTimestamp() {
     const now = new Date();
     const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-  
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+
     const formattedTimestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     return formattedTimestamp;
   }
-  
+
   const timestamp = getFormattedTimestamp();
   console.log(timestamp);
-  
-
 
   const handleRedeemReward = () => {
-    console.log(user)
+ 
     const userData = {
       user_id: user.userId,
       reward_name: "xiaomi air purify",
