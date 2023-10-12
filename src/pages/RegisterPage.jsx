@@ -1,5 +1,5 @@
 import React from "react";
-import ChumChumIcon from "../assets/ChumChumLogo-1.png";
+import ChumChumLogo from "../assets/chumchum-logo.png";
 import { liffApiInstance } from "../services/liffApi";
 import liff from "@line/liff";
 import { useEffect, useState } from "react";
@@ -8,8 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../storage/slices/userSlice";
 import { checkUserRegister, registerUser } from "../storage/slices/authSlice";
 import OnLoadingScreen from "../components/OnLoadingScreen";
-
 import chumchumBg from "../assets/chumchum-top-bg.jpg";
+import CallIcon from "@mui/icons-material/Call";
+import PersonIcon from "@mui/icons-material/Person";
+import StorefrontIcon from "@mui/icons-material/Storefront";
+
 const RegisterPage = () => {
   const { user } = useSelector((state) => state.user);
   const [name, setName] = useState("");
@@ -59,7 +62,6 @@ const RegisterPage = () => {
     setImage(userData.pictureUrl);
     setUserId(userData.userId);
     dispatch(setUser(userData));
-    console.log(userData.userId);
 
     dispatch(checkUserRegister({ user_id: userData.userId }))
       .unwrap()
@@ -109,66 +111,78 @@ const RegisterPage = () => {
 
   const renderRegister = () => {
     return (
-      <div className="w-full">
-        <div className="sm:container mx-auto p-4">
-          <div className="flex justify-center items-center bg-purple-600 p-2 rounded-lg gap-1">
-            <div className="flex justify-center rounded-md h-10 w-10 bg-green-400">
-              <img src={ChumChumIcon} />
+      <div className="w-full h-full">
+        <div className="  mx-auto p-4">
+          <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center mt-10 ">
+              <img src={ChumChumLogo} className="h-28" />
             </div>
-            <p className="text-black ">Chum Chum Reward</p>
           </div>
+          <div className="py-2">
+            <p className="font-bold text-2xl text-center mt-2 text-white"   style={{ textShadow: "1px 2px black" }}>
+              ลงทะเบียนชำชำรีวอร์ด
+            </p>
+          </div>
+          <form className="space-y-3 mt-3" onSubmit={(e) => handleSubmit(e)}>
+            <div className="flex items-center overflow-hidden rounded-full bg-gray-100  p-1  ">
+              <div className="p-1">
+                <CallIcon fontSize="medium" />
+              </div>
 
-          <form className="space-y-2" onSubmit={(e) => handleSubmit(e)}>
-            <div>
-              <p className="font-bold text-lg text-center mt-2">ลงทะเบียน</p>
-            </div>
-            <div className=" ">
-              <label htmlFor="telephone">เบอร์โทรศัพท์ :</label>
-              <br />
               <input
+                placeholder="กรอกเบอร์โทรศัพท์ 10 หลัก"
                 id="telephone"
                 type="tel"
-                className="border rounded-md h-10 w-full  p-2"
+                className="h-12 w-full  p-1 outline-none bg-gray-100"
                 onChange={handleMobileNumber}
                 value={mobileNumber}
               />
             </div>
-            <div className=" ">
-              <label htmlFor="retailerName">ชื่อร้านค้า :</label>
-              <br />
+            <div className="flex items-center overflow-hidden rounded-full bg-gray-100  p-1">
+              <div className="p-1">
+                <PersonIcon fontSize="medium" />
+              </div>
+
               <input
+                placeholder="กรอกชื่อร้านค้า"
                 id="retailerName"
-                className="border rounded-md h-10 w-full  p-2"
+                className="h-12   w-full  p-1 outline-none bg-gray-100"
                 onChange={handleRetailerName}
                 value={retailerName}
               />
             </div>
-            <div className=" ">
-              <label htmlFor="bplusCode">รหัสร้านค้า :</label>
-              <br />
+            <div className="flex items-center overflow-hidden rounded-full bg-gray-100  p-1">
+              <div className="p-1">
+                <StorefrontIcon fontSize="medium" />
+              </div>
               <input
+                placeholder="กรอกรหัสร้านค้า"
                 id="bplusCode"
-                className="border rounded-md h-10 w-full  p-2"
+                className="h-12 w-full  p-1 outline-none bg-gray-100"
                 onChange={handleBplusCode}
                 value={bplusCode}
               />
             </div>
             <p className="text-red-500 text-center"> {formMsg && formMsg}</p>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center pt-4">
               <button
-                className="p-2 bg-purple-600 rounded-lg text-white "
+                className="bg-purple-600 h-12 w-56 rounded-full text-white   "
                 type="submit"
               >
                 ลงทะเบียน
               </button>
             </div>
           </form>
+          <div className="text-center mt-8 text-gray-400">
+            <p>พบปัญหาในการลงทะเบียน</p>
+            <p>กรุณาติดต่อ Line: @ChumChum</p>
+          </div>
         </div>
 
-        <img src={user.pictureUrl} className="rounded-full h-24"></img>
+        {/* <img src={user.pictureUrl} className="rounded-full h-24"></img>
         <p>name: {user.displayName}</p>
-        <p>userid: {user.userId}</p>
+        <p>userid: {user.userId}</p> */}
       </div>
     );
   };
@@ -176,11 +190,11 @@ const RegisterPage = () => {
   return (
     <div className="w-full h-full ">
       <div
-        className="bg-fixed h-screen "
+        className=" h-screen "
         style={{
           backgroundRepeat: "no-repeat",
           backgroundImage: `url(${chumchumBg}) `,
-          backgroundPosition: "0 -10px",
+          backgroundPosition: "0 -50px",
         }}
       >
         {isLoading ? <OnLoadingScreen /> : renderRegister()}
