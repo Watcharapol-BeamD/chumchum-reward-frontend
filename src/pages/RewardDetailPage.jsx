@@ -40,7 +40,7 @@ const RewardDetailPage = () => {
 
   const renderRewardDetails = () => {
     return (
-      <div className="p-2   w-screen">
+      <div className="p-2    w-screen">
         <div className="bg-white w-full h-92 rounded-2xl overflow-hidden shadow-lg ">
           <div className="flex justify-center items-center    h-full">
             <div className="h-84">
@@ -48,12 +48,13 @@ const RewardDetailPage = () => {
             </div>
           </div>
         </div>
-        <div id="details" className="mt-1 space-y-1">
-          <p className="p-2 text-xl text-purple-600 font-bold text-center">
+        <div id="details" className="mt-1 space-y-1 px-2">
+          <p className=" py-2 text-xl text-purple-600 font-bold text-center">
             ESUN Mi Water Purifier 600G - เครื่องกรองน้ำอัจฉริยะ 600G
             (รุ่นตั้งพื้น)
           </p>
-          <p className="p-1 px-4 ">
+          <p className="font-bold">&#127775; 10 ดวง</p>
+          <p className="p-1   ">
             บัตรกำนัลใช้ชำระค่าสินค้าที่
             ดีพาร์ทเม้นท์สโตร์และซูเปอร์มาร์เก็ตในเครือเดอะมอลล์ กรุ๊ป ทุกสาขา
             ยกเว้น บัตรกำนัล, บัตรของขวัญ, บัตรเติมเงินทุกประเภทและร้านค้าเช่า
@@ -66,7 +67,7 @@ const RewardDetailPage = () => {
             โดยไม่แจ้งให้ทราบล่วงหน้า สอบถามรายละเอียดเพิ่มเติม
             สามารถติดต่อได้ที่แผนกลูกค้าสัมพันธ์ในเครือเดอะมอลล์ กรุ๊ป ทุกสาขา
           </p>
-          <p className="p-1 px-4 ">
+          <p className="p-1   ">
             บัตรกำนัลใช้ชำระค่าสินค้าที่
             ดีพาร์ทเม้นท์สโตร์และซูเปอร์มาร์เก็ตในเครือเดอะมอลล์ กรุ๊ป ทุกสาขา
             ยกเว้น บัตรกำนัล, บัตรของขวัญ, บัตรเติมเงินทุกประเภทและร้านค้าเช่า
@@ -94,10 +95,12 @@ const RewardDetailPage = () => {
 
   return (
     <div className="  w-full min-h-screen">
-      <div
-        className="bg-fixed h-60 "
+    <div
+        className=" h-screen "
         style={{
+          backgroundRepeat: "no-repeat",
           backgroundImage: `url(${chumchumBg}) `,
+          backgroundPosition: "0 -10px",
         }}
       >
         {renderRewardDetails()}

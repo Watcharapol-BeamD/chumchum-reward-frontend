@@ -9,6 +9,7 @@ import { setUser } from "../storage/slices/userSlice";
 import { checkUserRegister, registerUser } from "../storage/slices/authSlice";
 import OnLoadingScreen from "../components/OnLoadingScreen";
 
+import chumchumBg from "../assets/chumchum-top-bg.jpg";
 const RegisterPage = () => {
   const { user } = useSelector((state) => state.user);
   const [name, setName] = useState("");
@@ -51,7 +52,7 @@ const RegisterPage = () => {
         // setError(`${e}`);
       });
   };
- 
+
   const getUser = async () => {
     const userData = await liff.getProfile();
     setName(userData.displayName);
@@ -105,20 +106,6 @@ const RegisterPage = () => {
         });
     }
   };
-
-  // const checkIsRegister = () => {
-  //   const userData = {
-  //     user_id: userId,
-  //   };
-  //   return liffApiInstance
-  //     .post("/is_register", userData)
-  //     .then((res) => {
-  //       setIsRegister(res.data.isRegister);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   const renderRegister = () => {
     return (
@@ -188,8 +175,16 @@ const RegisterPage = () => {
 
   return (
     <div className="w-full h-full ">
-   
-      {isLoading ? <OnLoadingScreen /> : renderRegister()}
+      <div
+        className="bg-fixed h-screen "
+        style={{
+          backgroundRepeat: "no-repeat",
+          backgroundImage: `url(${chumchumBg}) `,
+          backgroundPosition: "0 -10px",
+        }}
+      >
+        {isLoading ? <OnLoadingScreen /> : renderRegister()}
+      </div>
     </div>
   );
 };
