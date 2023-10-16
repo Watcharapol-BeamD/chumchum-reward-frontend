@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../storage/slices/userSlice";
 import { checkUserRegister, registerUser } from "../storage/slices/authSlice";
 import OnLoadingScreen from "../components/OnLoadingScreen";
-import chumchumBg from "../assets/chumchum-top-bg.jpg";
+import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import CallIcon from "@mui/icons-material/Call";
 import PersonIcon from "@mui/icons-material/Person";
 import StorefrontIcon from "@mui/icons-material/Storefront";
@@ -119,7 +119,10 @@ const RegisterPage = () => {
             </div>
           </div>
           <div className="py-2">
-            <p className="font-bold text-2xl text-center mt-2 text-white"   style={{ textShadow: "1px 2px black" }}>
+            <p
+              className="font-bold text-2xl text-center mt-2 text-white"
+              style={{ textShadow: "1px 2px black" }}
+            >
               ลงทะเบียนชำชำรีวอร์ด
             </p>
           </div>
@@ -193,7 +196,7 @@ const RegisterPage = () => {
         className=" h-screen "
         style={{
           backgroundRepeat: "no-repeat",
-          backgroundImage: `url(${chumchumBg}) `,
+          backgroundImage: `url(${ChumChumBg}) `,
           backgroundPosition: "0 -50px",
         }}
       >

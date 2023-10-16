@@ -24,6 +24,7 @@ export const getRedeem = createAsyncThunk(
   }
 );
 
+
 const userSlice = createSlice({
   name: "user",
   initialState,
