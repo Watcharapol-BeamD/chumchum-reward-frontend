@@ -38,7 +38,7 @@ const ProtectRouteOnRegister = ({ redirectPath = "/reward", children }) => {
 
   const checkIsRegister = async (userId) => {
     const userData = {
-      user_id: userId,
+      customer_id: userId,
     };
 
     await liffApiInstance

@@ -10,7 +10,6 @@ const RewardDetailPage = () => {
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
   const dispatch = useDispatch();
 
-
   function getFormattedTimestamp() {
     const now = new Date();
     const year = now.getFullYear();
@@ -19,7 +18,6 @@ const RewardDetailPage = () => {
     const hours = String(now.getHours()).padStart(2, "0");
     const minutes = String(now.getMinutes()).padStart(2, "0");
     const seconds = String(now.getSeconds()).padStart(2, "0");
-
     const formattedTimestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     return formattedTimestamp;
   }
@@ -28,12 +26,12 @@ const RewardDetailPage = () => {
   console.log(timestamp);
 
   const handleRedeemReward = () => {
- 
     const userData = {
-      user_id: user.userId,
-      reward_name: "xiaomi air purify",
-      quantity: 1,
-      timestamp: timestamp,
+      customer_id: user.userId, //มาจาก line UID
+      reward_id: 1, //แก้ที่หลัง เอาข้อมูลมาจากหลังบ้านที่เอามาแสดง
+      quantity: 1, // 1 อันตายตัว
+      points_used:20,//แก้ที่หลัง เอาข้อมูลมาจากหลังบ้านที่เอามาแสดง
+      reward_name: "xiaomi air purify",////แก้ที่หลัง เอาข้อมูลมาจากหลังบ้านที่เอามาแสดง
     };
     dispatch(getRedeem(userData));
   };
@@ -81,7 +79,7 @@ const RewardDetailPage = () => {
             สามารถติดต่อได้ที่แผนกลูกค้าสัมพันธ์ในเครือเดอะมอลล์ กรุ๊ป ทุกสาขา
           </p>
         </div>
-        <div className="flex justify-center py-10   relative   ">
+        <div className="flex justify-center py-10 relative">
           <button
             className="bg-purple-600 h-12 w-56 rounded-lg text-white fixed bottom-6"
             onClick={handleRedeemReward}
@@ -95,7 +93,7 @@ const RewardDetailPage = () => {
 
   return (
     <div className="  w-full min-h-screen">
-    <div
+      <div
         className=" h-screen "
         style={{
           backgroundRepeat: "no-repeat",

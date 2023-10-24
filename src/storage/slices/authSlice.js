@@ -13,7 +13,7 @@ export const registerUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       console.log(userData)
-      const res = await liffApiInstance.post(`/register`, userData);
+      const res = await liffApiInstance.post(`user/register`, userData);
       // console.log(res);
       return res.data;
     } catch (err) {
@@ -26,7 +26,7 @@ export const checkUserRegister = createAsyncThunk(
   "auth/checkUserRegister",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await liffApiInstance.post(`/is_register`, userData);
+      const res = await liffApiInstance.post(`user/is_register`, userData);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

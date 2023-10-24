@@ -5,7 +5,7 @@ const initialState = {
   isLoading: false,
   retailer_name: "",
   bplus_code: "",
-  mobile_number: "",
+  phone_number: "",
   displayName: "",
   pictureUrl: "",
   userId: "",
@@ -16,7 +16,7 @@ export const getRedeem = createAsyncThunk(
   "user/getRedeem",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await liffApiInstance.post(`/redeem_reward`, userData);
+      const res = await liffApiInstance.post(`reward/redeem_reward`, userData);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

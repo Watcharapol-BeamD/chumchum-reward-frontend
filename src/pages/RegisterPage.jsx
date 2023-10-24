@@ -18,7 +18,7 @@ const RegisterPage = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [retailerName, setRetailerName] = useState("");
   const [bplusCode, setBplusCode] = useState("");
   const liftId = "2001035033-w8g1yvBj";
@@ -63,7 +63,7 @@ const RegisterPage = () => {
     setUserId(userData.userId);
     dispatch(setUser(userData));
 
-    dispatch(checkUserRegister({ user_id: userData.userId }))
+    dispatch(checkUserRegister({ customer_id: userData.userId }))
       .unwrap()
       .then((res) => {
         if (res.isRegister) {
@@ -74,8 +74,8 @@ const RegisterPage = () => {
       });
   };
 
-  const handleMobileNumber = (e) => {
-    setMobileNumber(e.target.value);
+  const handlePhoneNumber = (e) => {
+    setPhoneNumber(e.target.value);
     setFormMsg("");
   };
 
@@ -92,13 +92,13 @@ const RegisterPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!mobileNumber || !retailerName || !bplusCode) {
+    if (!phoneNumber || !retailerName || !bplusCode) {
       setFormMsg("Please fill in all required fields.");
     } else {
       const userData = {
-        user_id: userId,
+        customer_id: userId,
         retailer_name: retailerName,
-        mobile_number: mobileNumber,
+        phone_number: phoneNumber,
         bplus_code: bplusCode,
       };
       dispatch(registerUser(userData))
@@ -137,8 +137,8 @@ const RegisterPage = () => {
                 id="telephone"
                 type="tel"
                 className="h-12 w-full  p-1 outline-none bg-gray-100"
-                onChange={handleMobileNumber}
-                value={mobileNumber}
+                onChange={handlePhoneNumber}
+                value={phoneNumber}
               />
             </div>
             <div className="flex items-center overflow-hidden rounded-full bg-gray-100  p-1">
