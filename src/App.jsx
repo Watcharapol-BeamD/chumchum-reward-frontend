@@ -18,7 +18,7 @@ function App() {
         <Route path="/" element={<RegisterPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/reward" element={<RewardPage />} />
-        <Route path="/reward/details" element={<RewardDetailPage />} />
+        <Route path="/reward/details/:id" element={<RewardDetailPage />} />
         {/* 
         <Route element={<ProtectRouteOnRegister />}>
           <Route path="/" element={<HomePage />} />

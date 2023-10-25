@@ -5,13 +5,18 @@ import { setUser } from "../storage/slices/userSlice";
 import { Link } from "react-router-dom";
 import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import product1 from "../assets/m150.jpg";
+import { getReward } from "../storage/slices/rewardSlice";
+import RewardCard from "../components/RewardCard";
+
 const RewardPage = () => {
   const { user } = useSelector((state) => state.user);
+  const { rewards } = useSelector((state) => state.reward);
   const dispatch = useDispatch();
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
 
   useEffect(() => {
     liftInit();
+    dispatch(getReward());
   }, []);
 
   const liftInit = async () => {
@@ -35,15 +40,21 @@ const RewardPage = () => {
 
   const getUser = async () => {
     const userData = await liff.getProfile();
-
     dispatch(setUser(userData));
+  };
+
+  const renderItemCardSection = () => {
+    return rewards.map((item) => (
+      <RewardCard key={item.reward_id} item={item} />
+    ));
   };
 
   const renderItemCard = () => {
     return (
-      <div className="flex ite   w-full h-36 p-2 rounded-xl shadow-md">
+      <div className="flex w-full h-36 p-2 rounded-xl shadow-md">
+       
         <div className="w-1/3 flex justify-center ">
-          <div className="w-32 h-32  ">
+          <div className="w-32 h-32  bg-red-400">
             <img src={product1} className="w-32 h-32 " />
           </div>
         </div>
@@ -76,20 +87,6 @@ const RewardPage = () => {
             <p>ที่อยู่ : xxxxxxxx</p>
             <p>เบอร์โทร : 0616636349</p>
           </div>
-
-          {/* <div className="">
-            <div className="rounded-full overflow-hidden">
-              <img src={user.pictureUrl} className="h-20 w-20  "></img>{" "}
-            </div>
-            <div className=" text-center">
-              <p className="">{user.displayName}</p>
-            </div>
-          </div>
-
-          <div>
-            <p className="text-xl text-purple-500">คะแนนของคุณ</p>
-            <p className="text-center">54954 คะแนน</p>
-          </div> */}
         </div>
 
         <div className="flex flex-col items-center justify-center bg-purple-600 w-full h-24  p-3 rounded-xl my-2 ">
@@ -98,10 +95,7 @@ const RewardPage = () => {
         </div>
 
         <div className="space-y-2">
-          {renderItemCard()}
-          {renderItemCard()}
-          {renderItemCard()}
-          {renderItemCard()}
+          {renderItemCardSection()}
           {renderItemCard()}
         </div>
       </div>

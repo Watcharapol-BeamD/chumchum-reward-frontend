@@ -4,9 +4,11 @@ import chumchumBg from "../assets/chumchum-top-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { getRedeem, setUser } from "./../storage/slices/userSlice";
 import liff from "@line/liff";
+import { getReward } from "../storage/slices/rewardSlice";
 
 const RewardDetailPage = () => {
   const { user } = useSelector((state) => state.user);
+  const { rewards } = useSelector((state) => state.reward);
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
   const dispatch = useDispatch();
 
@@ -23,7 +25,11 @@ const RewardDetailPage = () => {
   }
 
   const timestamp = getFormattedTimestamp();
-  console.log(timestamp);
+ 
+useEffect(()=>{
+  dispatch(getReward())
+},[])
+
 
   const handleRedeemReward = () => {
     const userData = {
@@ -38,7 +44,8 @@ const RewardDetailPage = () => {
 
   const renderRewardDetails = () => {
     return (
-      <div className="p-2    w-screen">
+      <div className="p-2  w-screen">
+        {console.log(rewards)}
         <div className="bg-white w-full h-92 rounded-2xl overflow-hidden shadow-lg ">
           <div className="flex justify-center items-center    h-full">
             <div className="h-84">
