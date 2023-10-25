@@ -48,34 +48,7 @@ const RewardPage = () => {
       <RewardCard key={item.reward_id} item={item} />
     ));
   };
-
-  const renderItemCard = () => {
-    return (
-      <div className="flex w-full h-36 p-2 rounded-xl shadow-md">
-       
-        <div className="w-1/3 flex justify-center ">
-          <div className="w-32 h-32  bg-red-400">
-            <img src={product1} className="w-32 h-32 " />
-          </div>
-        </div>
-        <div className="w-2/3 flex flex-col justify-between">
-          <div className="line-clamp-2">
-            <p>บัตรเซ็นทรัล 500 บาทบัตรเซ็นทรัล 500 บาทบัตรเซ็นทรัล 500 บาท</p>
-          </div>
-          <div className=" flex   justify-center items-center  space-x-2  ">
-            <div className="w-2/5">
-              <p className="text-yellow-500">20,000 ดวง</p>
-            </div>
-            <div className="w-3/5   flex justify-center">
-              <button className="bg-gray-200 py-1 px-2 rounded-full ">
-                <Link to="/reward/details">แลกของรางวัล</Link>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+ 
 
   const renderReward = () => {
     return (

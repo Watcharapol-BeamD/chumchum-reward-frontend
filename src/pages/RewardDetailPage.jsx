@@ -35,10 +35,10 @@ const RewardDetailPage = () => {
   const handleRedeemReward = () => {
     const userData = {
       customer_id: user.userId, //มาจาก line UID
-      reward_id: 1, //แก้ที่หลัง เอาข้อมูลมาจากหลังบ้านที่เอามาแสดง
+      reward_id: reward.reward_id,
       quantity: 1, // 1 อันตายตัว
-      points_used: 20, //แก้ที่หลัง เอาข้อมูลมาจากหลังบ้านที่เอามาแสดง
-      reward_name: "xiaomi air purify", ////แก้ที่หลัง เอาข้อมูลมาจากหลังบ้านที่เอามาแสดง
+      points_used: reward.require_point,
+      reward_name: reward.name, 
     };
     dispatch(getRedeem(userData));
   };

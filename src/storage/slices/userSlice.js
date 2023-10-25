@@ -15,6 +15,7 @@ const initialState = {
 export const getRedeem = createAsyncThunk(
   "user/getRedeem",
   async (userData, { rejectWithValue }) => {
+    console.log(userData)
     try {
       const res = await liffApiInstance.post(`reward/redeem_reward`, userData);
       return res.data;
