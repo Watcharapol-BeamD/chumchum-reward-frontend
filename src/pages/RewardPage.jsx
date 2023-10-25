@@ -10,7 +10,7 @@ import RewardCard from "../components/RewardCard";
 
 const RewardPage = () => {
   const { user } = useSelector((state) => state.user);
-  const { rewards } = useSelector((state) => state.reward);
+  const { rewardList } = useSelector((state) => state.reward);
   const dispatch = useDispatch();
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
 
@@ -44,7 +44,7 @@ const RewardPage = () => {
   };
 
   const renderItemCardSection = () => {
-    return rewards.map((item) => (
+    return rewardList.map((item) => (
       <RewardCard key={item.reward_id} item={item} />
     ));
   };
@@ -96,7 +96,6 @@ const RewardPage = () => {
 
         <div className="space-y-2">
           {renderItemCardSection()}
-          {renderItemCard()}
         </div>
       </div>
     );
