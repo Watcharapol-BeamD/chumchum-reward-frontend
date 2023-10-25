@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const RewardCard = ({item}) => {
-    const imageUrl = 'http://api-test.chumchumreward.com/images/'
+    const imageUrl = 'https://api-test.chumchumreward.com/images/'
 
   return (
     <div className="flex w-full h-36 p-2 rounded-xl shadow-md">

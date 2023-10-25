@@ -7,7 +7,7 @@ import { getRedeem } from "./../storage/slices/rewardSlice";
 import liff from "@line/liff";
 import { getRewardById } from "../storage/slices/rewardSlice";
 import { Link, useParams } from "react-router-dom";
-const imageUrl = "http://api-test.chumchumreward.com/images/";
+const imageUrl = "https://api-test.chumchumreward.com/images/";
 
 const RewardDetailPage = () => {
   const { user } = useSelector((state) => state.user);

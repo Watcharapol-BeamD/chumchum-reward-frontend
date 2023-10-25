@@ -7,6 +7,7 @@ import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import product1 from "../assets/m150.jpg";
 import { getReward } from "../storage/slices/rewardSlice";
 import RewardCard from "../components/RewardCard";
+import { initializeLIFF, getUser } from "../services/lineUtils";
 
 const RewardPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -15,31 +16,17 @@ const RewardPage = () => {
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
 
   useEffect(() => {
-    liftInit();
-    dispatch(getReward());
+    setUpData();
   }, []);
 
-  const liftInit = async () => {
-    await liff
-      .init({
-        liffId: "2001035033-w8g1yvBj",
-      })
-      .then(async () => {
-        if (liff.isLoggedIn()) {
-          getUser();
-        } else {
-          liff.login();
-        }
-        // setMessage("LIFF init succeeded.");
-      })
-      .catch((e) => {
-        // setMessage("LIFF init failed.");
-        // setError(`${e}`);
-      });
+  const setUpData = async () => {
+    await initializeLIFF(),
+    await getUserinfo();
+    await dispatch(getReward());
   };
 
-  const getUser = async () => {
-    const userData = await liff.getProfile();
+  const getUserinfo = async () => {
+    const userData = await getUser();
     const customerData = { customer_id: userData.userId };
     dispatch(getUserData(customerData));
     // dispatch(setUser(userData));
@@ -65,7 +52,9 @@ const RewardPage = () => {
 
         <div className="flex flex-col items-center justify-center bg-purple-600 w-full h-24  p-3 rounded-xl my-2 ">
           <p className="text-center text-white text-lg">ดาวชำชำปัจจุบัน</p>
-          <p className="text-center text-green-400 text-lg">&#127775; {user.points} ดวง</p>
+          <p className="text-center text-green-400 text-lg">
+            &#127775; {user.points} ดวง
+          </p>
         </div>
 
         <div className="space-y-2">{renderItemCardSection()}</div>
