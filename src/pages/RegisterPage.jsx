@@ -5,13 +5,14 @@ import liff from "@line/liff";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../storage/slices/userSlice";
+import { getUserData, setUser } from "../storage/slices/userSlice";
 import { checkUserRegister, registerUser } from "../storage/slices/authSlice";
 import OnLoadingScreen from "../components/OnLoadingScreen";
 import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import CallIcon from "@mui/icons-material/Call";
 import PersonIcon from "@mui/icons-material/Person";
 import StorefrontIcon from "@mui/icons-material/Storefront";
+import { initializeLIFF, getUser } from "../services/lineUtils";
 
 const RegisterPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -33,35 +34,19 @@ const RegisterPage = () => {
   };
 
   useEffect(() => {
-    liftInit();
+    setUpData();
   }, []);
 
-  const liftInit = async () => {
-    await liff
-      .init({
-        liffId: "2001035033-w8g1yvBj",
-      })
-      .then(async () => {
-        if (liff.isLoggedIn()) {
-          getUser();
-        } else {
-          liff.login();
-        }
-
-        // setMessage("LIFF init succeeded.");
-      })
-      .catch((e) => {
-        // setMessage("LIFF init failed.");
-        // setError(`${e}`);
-      });
+  const setUpData = async () => {
+    await initializeLIFF();
+    await getUserInfo();
   };
 
-  const getUser = async () => {
-    const userData = await liff.getProfile();
-    setName(userData.displayName);
-    setImage(userData.pictureUrl);
+  const getUserInfo = async () => {
+    const userData = await getUser();
     setUserId(userData.userId);
-    dispatch(setUser(userData));
+    const data = { customer_id: userData.userId };
+    dispatch(getUserData(data));
 
     dispatch(checkUserRegister({ customer_id: userData.userId }))
       .unwrap()
@@ -103,8 +88,10 @@ const RegisterPage = () => {
       };
       dispatch(registerUser(userData))
         .unwrap()
-        .then(() => {
-          handleRedirectIfRegister();
+        .then((res) => {
+          if (res.isRegisterPass === true) {
+            handleRedirectIfRegister();
+          }
         });
     }
   };

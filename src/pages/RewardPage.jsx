@@ -27,8 +27,8 @@ const RewardPage = () => {
 
   const getUserinfo = async () => {
     const userData = await getUser();
-    const customerData = { customer_id: userData.userId };
-    dispatch(getUserData(customerData));
+    const data = { customer_id: userData.userId };
+    dispatch(getUserData(data));
     // dispatch(setUser(userData));
   };
 

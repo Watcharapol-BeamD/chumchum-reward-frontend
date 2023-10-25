@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import productImage from "../assets/waterpurifier.webp";
 import chumchumBg from "../assets/chumchum-top-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,35 +7,32 @@ import { getRedeem } from "./../storage/slices/rewardSlice";
 import liff from "@line/liff";
 import { getRewardById } from "../storage/slices/rewardSlice";
 import { Link, useParams } from "react-router-dom";
-const imageUrl = "https://api-test.chumchumreward.com/images/";
+import OnLoadingScreen from "../components/OnLoadingScreen";
 
 const RewardDetailPage = () => {
   const { user } = useSelector((state) => state.user);
   const { reward } = useSelector((state) => state.reward);
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
+  const imageUrl = "https://api-test.chumchumreward.com/images/";
   const dispatch = useDispatch();
   const { id } = useParams();
-  // function getFormattedTimestamp() {
-  //   const now = new Date();
-  //   const year = now.getFullYear();
-  //   const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are zero-based
-  //   const day = String(now.getDate()).padStart(2, "0");
-  //   const hours = String(now.getHours()).padStart(2, "0");
-  //   const minutes = String(now.getMinutes()).padStart(2, "0");
-  //   const seconds = String(now.getSeconds()).padStart(2, "0");
-  //   const formattedTimestamp = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-  //   return formattedTimestamp;
-  // }
-
-  // const timestamp = getFormattedTimestamp();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getRewardById(id));
+    dispatch(getRewardById(id))
+      .unwrap()
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const handleRedeemReward = () => {
+    console.log(user)
     const userData = {
-      customer_id: user.userId, //มาจาก line UID
+      customer_id: user.customer_id, //มาจาก line UID
       reward_id: reward.reward_id,
       quantity: 1, // 1 อันตายตัว
       points_used: reward.require_point,
@@ -81,7 +78,7 @@ const RewardDetailPage = () => {
           backgroundPosition: "0 -10px",
         }}
       >
-        {renderRewardDetails()}
+        {isLoading ? <OnLoadingScreen /> : renderRewardDetails()}
       </div>
     </div>
   );
