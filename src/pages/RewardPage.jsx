@@ -1,5 +1,5 @@
 import liff from "@line/liff";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData, setUser } from "../storage/slices/userSlice";
 import { Link } from "react-router-dom";
@@ -8,27 +8,35 @@ import product1 from "../assets/m150.jpg";
 import { getReward } from "../storage/slices/rewardSlice";
 import RewardCard from "../components/RewardCard";
 import { initializeLIFF, getUser } from "../services/lineUtils";
+import OnLoadingScreen from "./../components/OnLoadingScreen";
 
 const RewardPage = () => {
   const { user } = useSelector((state) => state.user);
   const { rewardList } = useSelector((state) => state.reward);
   const dispatch = useDispatch();
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setUpData();
   }, []);
 
   const setUpData = async () => {
-    await initializeLIFF(),
-    await getUserinfo();
+    await initializeLIFF(), await getUserinfo();
     await dispatch(getReward());
   };
 
   const getUserinfo = async () => {
     const userData = await getUser();
     const data = { customer_id: userData.userId };
-    dispatch(getUserData(data));
+    dispatch(getUserData(data))
+      .unwrap()
+      .then(() => {
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     // dispatch(setUser(userData));
   };
 
@@ -72,7 +80,7 @@ const RewardPage = () => {
           backgroundPosition: "0 -50px",
         }}
       >
-        {renderReward()}
+        {isLoading ? <OnLoadingScreen /> : renderReward()}
       </div>
     </div>
   );

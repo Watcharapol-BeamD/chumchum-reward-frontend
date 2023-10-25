@@ -8,6 +8,7 @@ import liff from "@line/liff";
 import { getRewardById } from "../storage/slices/rewardSlice";
 import { Link, useParams } from "react-router-dom";
 import OnLoadingScreen from "../components/OnLoadingScreen";
+import ImageNotFound from "./../components/ImageNotFound";
 
 const RewardDetailPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -30,7 +31,7 @@ const RewardDetailPage = () => {
   }, []);
 
   const handleRedeemReward = () => {
-    console.log(user)
+    console.log(user);
     const userData = {
       customer_id: user.customer_id, //มาจาก line UID
       reward_id: reward.reward_id,
@@ -47,7 +48,14 @@ const RewardDetailPage = () => {
         <div className="bg-white w-full h-92 rounded-2xl overflow-hidden shadow-lg ">
           <div className="flex justify-center items-center    h-full">
             <div className="h-84">
-              <img className="h-84" src={imageUrl + reward.reward_image}></img>
+              {reward.reward_image === null ? (
+                <ImageNotFound />
+              ) : (
+                <img
+                  className="h-84"
+                  src={imageUrl + reward.reward_image}
+                ></img>
+              )}
             </div>
           </div>
         </div>
