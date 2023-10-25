@@ -9,24 +9,53 @@ const initialState = {
   displayName: "",
   pictureUrl: "",
   userId: "",
-  user: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):null
+  user: localStorage.getItem("user")
+    ? JSON.parse(localStorage.getItem("user"))
+    : null,
 };
 
- 
+export const getUserData = createAsyncThunk(
+  "user/getUserData",
+  async (userData, { rejectWithValue }) => {
+    console.log(userData);
+    try {
+      const res = await liffApiInstance.post(
+        `user/get_customer_by_id`,
+        userData
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  } 
+);
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     setUser: (state, action) => {
-      // console.log(action);
+      console.log(action.payload);
       state.user = action.payload;
       localStorage.setItem("user", JSON.stringify(action.payload));
     },
   },
   extraReducers: (builder) => {
- 
-   
+    builder
+      .addCase(getUserData.pending, (state) => {
+        state.isLoading = true;
+        state.msg = null;
+      })
+      .addCase(getUserData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        localStorage.setItem("user", JSON.stringify(action.payload));
+        state.msg = action.payload.msg;
+      })
+      .addCase(getUserData.rejected, (state, action) => {
+        state.isLoading = false;
+        state.msg = action.payload.msg;
+      });
   },
 });
 

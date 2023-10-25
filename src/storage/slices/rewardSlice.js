@@ -36,6 +36,7 @@ export const getRewardById = createAsyncThunk(
 
 export const getRedeem = createAsyncThunk(
   "reward/getRedeem",
+  
   async (userData, { rejectWithValue }) => {
     console.log(userData)
     try {

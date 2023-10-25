@@ -1,7 +1,7 @@
 import liff from "@line/liff";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../storage/slices/userSlice";
+import { getUserData, setUser } from "../storage/slices/userSlice";
 import { Link } from "react-router-dom";
 import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import product1 from "../assets/m150.jpg";
@@ -40,7 +40,9 @@ const RewardPage = () => {
 
   const getUser = async () => {
     const userData = await liff.getProfile();
-    dispatch(setUser(userData));
+    const customerData = { customer_id: userData.userId };
+    dispatch(getUserData(customerData));
+    // dispatch(setUser(userData));
   };
 
   const renderItemCardSection = () => {
@@ -48,7 +50,6 @@ const RewardPage = () => {
       <RewardCard key={item.reward_id} item={item} />
     ));
   };
- 
 
   const renderReward = () => {
     return (
@@ -56,20 +57,18 @@ const RewardPage = () => {
         <div id="Profile" className="  bg-white w-full h-40 p-2 rounded-xl ">
           <p className="text-center">สวัสดีตอนบ่าย</p>
           <div className="pt-2">
-            <p>รหัสร้านค้า : xxxxxx</p>
+            <p>รหัสร้านค้า : {user.bplus_code}</p>
             <p>ที่อยู่ : xxxxxxxx</p>
-            <p>เบอร์โทร : 0616636349</p>
+            <p>เบอร์โทร : {user.phone_number}</p>
           </div>
         </div>
 
         <div className="flex flex-col items-center justify-center bg-purple-600 w-full h-24  p-3 rounded-xl my-2 ">
           <p className="text-center text-white text-lg">ดาวชำชำปัจจุบัน</p>
-          <p className="text-center text-green-400 text-lg">&#127775; 0 ดวง</p>
+          <p className="text-center text-green-400 text-lg">&#127775; {user.points} ดวง</p>
         </div>
 
-        <div className="space-y-2">
-          {renderItemCardSection()}
-        </div>
+        <div className="space-y-2">{renderItemCardSection()}</div>
       </div>
     );
   };
