@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import productImage from "../assets/waterpurifier.webp";
 import chumchumBg from "../assets/chumchum-top-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
-import { getRedeem, setUser } from "./../storage/slices/userSlice";
+import { setUser } from "./../storage/slices/userSlice";
+import { getRedeem } from "./../storage/slices/rewardSlice";
 import liff from "@line/liff";
 import { getRewardById } from "../storage/slices/rewardSlice";
 import { Link, useParams } from "react-router-dom";
@@ -38,7 +39,7 @@ const RewardDetailPage = () => {
       reward_id: reward.reward_id,
       quantity: 1, // 1 อันตายตัว
       points_used: reward.require_point,
-      reward_name: reward.name, 
+      reward_name: reward.name,
     };
     dispatch(getRedeem(userData));
   };

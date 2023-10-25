@@ -12,19 +12,7 @@ const initialState = {
   user: localStorage.getItem("user")?JSON.parse(localStorage.getItem("user")):null
 };
 
-export const getRedeem = createAsyncThunk(
-  "user/getRedeem",
-  async (userData, { rejectWithValue }) => {
-    console.log(userData)
-    try {
-      const res = await liffApiInstance.post(`reward/redeem_reward`, userData);
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  }
-);
-
+ 
 
 const userSlice = createSlice({
   name: "user",
@@ -37,19 +25,8 @@ const userSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(getRedeem.pending, (state) => {
-        state.isLoading = true;
-        state.msg = null;
-      })
-      .addCase(getRedeem.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.msg = action.payload.msg;
-      })
-      .addCase(getRedeem.rejected, (state, action) => {
-        state.isLoading = false;
-        state.msg = action.payload.msg;
-      });
+ 
+   
   },
 });
 

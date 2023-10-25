@@ -33,6 +33,20 @@ export const getRewardById = createAsyncThunk(
   }
 );
 
+
+export const getRedeem = createAsyncThunk(
+  "reward/getRedeem",
+  async (userData, { rejectWithValue }) => {
+    console.log(userData)
+    try {
+      const res = await liffApiInstance.post(`reward/redeem_reward`, userData);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const rewardSlice = createSlice({
   name: "reward",
   initialState,
@@ -56,6 +70,17 @@ const rewardSlice = createSlice({
       })
       .addCase(getRewardById.rejected, (state, action) => {
         state.msg = action.payload;
+      })    .addCase(getRedeem.pending, (state) => {
+        state.isLoading = true;
+        state.msg = null;
+      })
+      .addCase(getRedeem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.msg = action.payload.msg;
+      })
+      .addCase(getRedeem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.msg = action.payload.msg;
       });
   },
 });
