@@ -24,7 +24,7 @@ const EditProfilePage = () => {
 
   useEffect(() => {
     setUpData();
-  }, []);
+  }, [isLoading]);
 
   const setUpData = async () => {
     await initializeLIFF();
@@ -70,7 +70,7 @@ const EditProfilePage = () => {
 
   const handleProvince = (e) => {
     const value = e.target.value;
-    setPostCode(value);
+    setProvince(value);
   };
 
   const handleDistrict = (e) => {
