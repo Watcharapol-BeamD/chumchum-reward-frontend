@@ -84,6 +84,26 @@ class Validation {
       return false;
     }
   }
+
+  getValidateRetailerName(retailerName) {
+    const retailerNameCheck = /^[a-zA-Z]{1,100}$/;
+    if (retailerName.match(" ") || "") {
+      return false;
+    } else if (retailerName.match(retailerNameCheck)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  validateRetailerName(retailerName) {
+    // Check if the retailerName is not empty and has a length between 1 and 100 characters
+    return (
+      retailerName.trim() !== "" &&
+      retailerName.length >= 1 &&
+      retailerName.length <= 100
+    );
+  }
 }
 
 export default new Validation();

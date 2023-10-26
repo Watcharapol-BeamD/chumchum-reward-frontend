@@ -13,6 +13,7 @@ import CallIcon from "@mui/icons-material/Call";
 import PersonIcon from "@mui/icons-material/Person";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import { initializeLIFF, getUser } from "../services/lineUtils";
+import Validation from "../services/Validation";
 
 const RegisterPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -28,6 +29,9 @@ const RegisterPage = () => {
   const [formMsg, setFormMsg] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [phoneNumberMsg, setPhoneNumberMsg] = useState("");
+  const [retailerMsg, setRetailerMsg] = useState("");
+  const [retailerCodeMsg, setRetailerCodeMsg] = useState("");
 
   const handleRedirectIfRegister = () => {
     navigate("/reward");
@@ -60,12 +64,28 @@ const RegisterPage = () => {
   };
 
   const handlePhoneNumber = (e) => {
-    setPhoneNumber(e.target.value);
+    const value = e.target.value;
+    setPhoneNumber(value);
+    if (Validation.getValidatePhoneNumber(value)) {
+      setPhoneNumberMsg("");
+    } else {
+      setPhoneNumberMsg(
+        "เบอร์มือต้องมีจำนวน 8 หลัก และต้องขึ้นต้นด้วย 06 หรือ 08 หรือ 09"
+      );
+    }
+
     setFormMsg("");
   };
 
   const handleRetailerName = (e) => {
-    setRetailerName(e.target.value);
+    const value = e.target.value;
+    setRetailerName(value);
+
+    if (Validation.validateRetailerName(value)) {
+      setRetailerMsg("");
+    } else {
+      setRetailerMsg("ชื่อร้านค้าต้องมีขนาดไม่เกิน 100 ตัวอักษร");
+    }
     setFormMsg("");
   };
 
@@ -76,16 +96,21 @@ const RegisterPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!phoneNumber || !retailerName || !bplusCode) {
       setFormMsg("Please fill in all required fields.");
-    } else {
+    }
+ 
+    if (
+      Validation.getValidatePhoneNumber(phoneNumber) &&
+      Validation.validateRetailerName(retailerName)
+    ) {
       const userData = {
         customer_id: userId,
         retailer_name: retailerName,
         phone_number: phoneNumber,
         bplus_code: bplusCode,
       };
+    
       dispatch(registerUser(userData))
         .unwrap()
         .then((res) => {
@@ -94,6 +119,26 @@ const RegisterPage = () => {
           }
         });
     }
+
+    // if (!phoneNumber || !retailerName || !bplusCode) {
+    //   setFormMsg("Please fill in all required fields.");
+    // } else {
+
+    //   const userData = {
+    //     customer_id: userId,
+    //     retailer_name: retailerName,
+    //     phone_number: phoneNumber,
+    //     bplus_code: bplusCode,
+    //   };
+    //   dispatch(registerUser(userData))
+    //     .unwrap()
+    //     .then((res) => {
+    //       if (res.isRegisterPass === true) {
+    //         handleRedirectIfRegister();
+    //       }
+    //     });
+
+    // }
   };
 
   const renderRegister = () => {
@@ -128,6 +173,7 @@ const RegisterPage = () => {
                 value={phoneNumber}
               />
             </div>
+            <p className="text-xs text-red-500 pl-1">{phoneNumberMsg}</p>
             <div className="flex items-center overflow-hidden rounded-full bg-gray-100  p-1">
               <div className="p-1">
                 <PersonIcon fontSize="medium" />
@@ -141,6 +187,7 @@ const RegisterPage = () => {
                 value={retailerName}
               />
             </div>
+            <p className="text-xs text-red-500 pl-1">{retailerMsg}</p>
             <div className="flex items-center overflow-hidden rounded-full bg-gray-100  p-1">
               <div className="p-1">
                 <StorefrontIcon fontSize="medium" />
@@ -157,7 +204,7 @@ const RegisterPage = () => {
 
             <div className="flex justify-center pt-4">
               <button
-                className="bg-purple-600 h-12 w-56 rounded-full text-white   "
+                className="bg-purple-600 h-12 w-56 rounded-full text-white"
                 type="submit"
               >
                 ลงทะเบียน

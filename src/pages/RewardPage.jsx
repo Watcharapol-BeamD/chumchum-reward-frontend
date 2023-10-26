@@ -58,6 +58,7 @@ const RewardPage = () => {
           <div className="pt-3">
             <p>รหัสร้านค้า : {user.bplus_code}</p>
             {/* <p>ที่อยู่ : xxxxxxxx</p> */}
+            <p>ชื่อร้านค้า : {user.retailer_name}</p>
             <p>เบอร์โทร : {user.phone_number}</p>
           </div>
         </div>
