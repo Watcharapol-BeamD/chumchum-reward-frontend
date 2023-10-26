@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
+import { initializeLIFF, getUser } from "../services/lineUtils";
+import { getUserData } from "../storage/slices/userSlice";
 
 const EditProfilePage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -10,22 +12,76 @@ const EditProfilePage = () => {
   const [province, setProvince] = useState("");
   const [district, setDistrict] = useState("");
   const [subDistrict, setSubDistrict] = useState("");
-  const [post, setPost] = useState("");
+  const [postCode, setPostCode] = useState("");
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setUpData();
+  }, []);
+
+  const setUpData = async () => {
+    await initializeLIFF();
+    await getUserinfo();
+  };
+
+  const getUserinfo = async () => {
+    const userData = await getUser();
+    const data = { customer_id: userData.userId };
+    dispatch(getUserData(data))
+      .unwrap()
+      .then(() => {
+        setAddress(user.address);
+        setProvince(user.province);
+        setDistrict(user.district);
+        setSubDistrict(user.sub_district);
+        setPostCode(user.post_code);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    if (true) {
+      const userData = {
+        customer_id: user.customer_id,
+        address: address,
+        province: province,
+        district: district,
+        sub_district: subDistrict,
+        post_code: postCode,
+      };
+      console.log(userData);
+    }
   };
 
-  const handleAddress = (e) => {};
+  const handleAddress = (e) => {
+    const value = e.target.value;
+    setAddress(value);
+  };
 
-  const handleProvince = (e) => {};
+  const handleProvince = (e) => {
+    const value = e.target.value;
+    setPostCode(value);
+  };
 
-  const handleDistrict = (e) => {};
+  const handleDistrict = (e) => {
+    const value = e.target.value;
+    setDistrict(value);
+  };
 
-  const handleSubDistrict = (e) => {};
+  const handleSubDistrict = (e) => {
+    const value = e.target.value;
+    setSubDistrict(value);
+  };
 
-  const handlePostCode = (e) => {};
+  const handlePostCode = (e) => {
+    const value = e.target.value;
+    setPostCode(value);
+  };
 
   const renderEditForm = () => {
     return (
@@ -45,6 +101,7 @@ const EditProfilePage = () => {
           <textarea
             className="h-40 w-full  p-1 px-2 outline-none    border border-gray-300 rounded-lg"
             onChange={handleAddress}
+            value={address}
           />
         </div>
         <div id="province">
@@ -53,6 +110,7 @@ const EditProfilePage = () => {
             type="text"
             className="h-12 w-full  p-1 px-2 outline-none  border border-gray-300 rounded-lg"
             onChange={handleProvince}
+            value={province}
           />
         </div>
         <div id="district" className="">
@@ -61,6 +119,7 @@ const EditProfilePage = () => {
             type="text"
             className="h-12 w-full  p-1 px-2 outline-none   border border-gray-300 rounded-lg"
             onChange={handleDistrict}
+            value={district}
           />
         </div>
         <div id="sub-district" className="">
@@ -69,18 +128,23 @@ const EditProfilePage = () => {
             type="text"
             className="h-12 w-full  p-1 px-2 outline-none   border border-gray-300 rounded-lg"
             onChange={handleSubDistrict}
+            value={subDistrict}
           />
         </div>
-        <div id="post-code" className="">
+        <div id="postCode-code" className="">
           <p>รหัสไปรษณีย์ : </p>
           <input
             type="number"
             className="h-12 w-full p-1 px-2 outline-none  border border-gray-300 rounded-lg"
             onChange={handlePostCode}
+            value={postCode}
           />
         </div>
         <div className="flex justify-center gap-3">
-          <button className="text-red-400 border border-red-400 p-2 px-8 rounded-full" type="submit">
+          <button
+            className="text-red-400 border border-red-400 p-2 px-8 rounded-full"
+            type="submit"
+          >
             ยกเลิก
           </button>
           <button className="bg-green-400 p-2  px-8 rounded-full" type="submit">
