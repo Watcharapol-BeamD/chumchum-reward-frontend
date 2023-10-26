@@ -2,13 +2,14 @@ import liff from "@line/liff";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData, setUser } from "../storage/slices/userSlice";
-import { Link } from "react-router-dom";
 import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import product1 from "../assets/m150.jpg";
 import { getReward } from "../storage/slices/rewardSlice";
 import RewardCard from "../components/RewardCard";
 import { initializeLIFF, getUser } from "../services/lineUtils";
 import OnLoadingScreen from "./../components/OnLoadingScreen";
+import EditIcon from "@mui/icons-material/Edit";
+import { Link } from "react-router-dom";
 
 const RewardPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -37,7 +38,6 @@ const RewardPage = () => {
       .catch((err) => {
         console.log(err);
       });
-    // dispatch(setUser(userData));
   };
 
   const renderItemCardSection = () => {
@@ -49,11 +49,15 @@ const RewardPage = () => {
   const renderReward = () => {
     return (
       <div className="h-full p-2">
-        <div id="Profile" className="  bg-white w-full h-40 p-2 rounded-xl ">
-          <p className="text-center">สวัสดีตอนบ่าย</p>
-          <div className="pt-2">
+        <div id="Profile" className="relative  bg-white w-full h-40 p-2 rounded-xl ">
+          <p className="text-center  ">สวัสดีตอนบ่าย</p>
+          <Link to="/edit_profile" className="absolute right-4 top-1">
+            <EditIcon />
+          </Link>
+
+          <div className="pt-3">
             <p>รหัสร้านค้า : {user.bplus_code}</p>
-            <p>ที่อยู่ : xxxxxxxx</p>
+            {/* <p>ที่อยู่ : xxxxxxxx</p> */}
             <p>เบอร์โทร : {user.phone_number}</p>
           </div>
         </div>
@@ -61,7 +65,7 @@ const RewardPage = () => {
         <div className="flex flex-col items-center justify-center bg-purple-600 w-full h-24  p-3 rounded-xl my-2 ">
           <p className="text-center text-white text-lg">ดาวชำชำปัจจุบัน</p>
           <p className="text-center text-green-400 text-lg">
-            &#127775; {user.points} ดวง
+            &#127775; {user.points===null?0:user.points} ดวง
           </p>
         </div>
 
