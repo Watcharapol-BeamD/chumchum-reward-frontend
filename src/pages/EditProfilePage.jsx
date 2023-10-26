@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { initializeLIFF, getUser } from "../services/lineUtils";
 import { getEditCustomerInfo, getUserData } from "../storage/slices/userSlice";
-import OnLoadingScreen from './../components/OnLoadingScreen';
+import OnLoadingScreen from "./../components/OnLoadingScreen";
+import { useNavigate } from "react-router-dom";
+import ConfirmModal from "../components/ConfirmModal";
 
 const EditProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +16,10 @@ const EditProfilePage = () => {
   const [district, setDistrict] = useState("");
   const [subDistrict, setSubDistrict] = useState("");
   const [postCode, setPostCode] = useState("");
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setUpData();
@@ -37,29 +42,24 @@ const EditProfilePage = () => {
         setSubDistrict(user.sub_district);
         setPostCode(user.post_code);
         setIsLoading(false);
-        // setTimeout(() => {
-           
-        // }, 1000);
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
+ 
+    const userData = {
+      customer_id: user.customer_id,
+      address: address,
+      province: province,
+      district: district,
+      sub_district: subDistrict,
+      post_code: postCode,
+    };
 
-    if (true) {
-      const userData = {
-        customer_id: user.customer_id,
-        address: address,
-        province: province,
-        district: district,
-        sub_district: subDistrict,
-        post_code: postCode,
-      };
-      dispatch(getEditCustomerInfo(userData));
-    }
+    dispatch(getEditCustomerInfo(userData));
   };
 
   const handleAddress = (e) => {
@@ -87,9 +87,29 @@ const EditProfilePage = () => {
     setPostCode(value);
   };
 
+  const handleSaveConfirmation = () => {
+    setShowSaveModal(true);
+  };
+
+  const handleCancelConfirmation = (e) => {
+    e.preventDefault()
+    setShowCancelModal(true);
+  };
+
+  const handleConfirmSave = () => {
+    handleSubmit();
+    setShowSaveModal(false);
+  };
+
+  const handleConfirmCancel = () => {
+
+    setShowCancelModal(false);
+    navigate('/reward');
+  };
+
   const renderEditForm = () => {
     return (
-      <form className="space-y-4" onSubmit={handleSubmit}>
+      <form className="space-y-4 relative"  >
         <div id="phone-number" className=" ">
           {/* แก้เบอร์ไม่ได้ แสดงอย่างเดียว */}
           <p>เบอร์โทร : </p>
@@ -146,12 +166,16 @@ const EditProfilePage = () => {
         </div>
         <div className="flex justify-center gap-3">
           <button
+            onClick={handleCancelConfirmation}
             className="text-red-400 border border-red-400 p-2 px-8 rounded-full"
-            type="submit"
           >
             ยกเลิก
           </button>
-          <button className="bg-green-400 p-2  px-8 rounded-full" type="submit">
+          <button
+            className="bg-green-400 p-2  px-8 rounded-full"
+            type="button"
+            onClick={handleSaveConfirmation}
+          >
             บันทึก
           </button>
         </div>
@@ -165,15 +189,6 @@ const EditProfilePage = () => {
         <p className="text-center text-xl  bg-purple-200 rounded-full p-1 my-2 ">
           แก้ไขข้อมูล
         </p>
-        {/* <div className="flex justify-end  gap-2 m-2">
-          <Button variant="contained" color="error">
-            ยกเลิก
-          </Button>
-          <Button variant="contained" color="primary">
-            บันทึก
-          </Button>
-        </div> */}
-
         {renderEditForm()}
       </div>
     );
@@ -189,8 +204,30 @@ const EditProfilePage = () => {
           backgroundPosition: "0 -10px",
         }}
       >
-        {isLoading ? <OnLoadingScreen/> : renderProfile()}
+        {isLoading ? <OnLoadingScreen /> : renderProfile()}
       </div>
+
+      {/* Render confirmation modals */}
+      <ConfirmModal
+        isOpen={showSaveModal}
+        confirmMsg="บันทึก"
+        cancelMsg="ยกเลิก"
+        message="ต้องการบันทึกใช่หรือไม่?"
+        cancelColor="bg-red-400"
+        confirmColor="bg-green-400"
+        onConfirm={handleConfirmSave}
+        onCancel={() => setShowSaveModal(false)}
+      />
+      <ConfirmModal
+        isOpen={showCancelModal}
+        confirmMsg="ยกเลิกการแก้ไข"
+        cancelMsg="แก้ไขต่อ"
+        message="ต้องการยกเลิกใช่หรือไม่"
+        cancelColor="bg-yellow-300"
+        confirmColor="bg-red-400"
+        onConfirm={handleConfirmCancel}
+        onCancel={() => setShowCancelModal(false)}
+      />
     </div>
   );
 };
