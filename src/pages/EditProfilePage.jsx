@@ -3,7 +3,7 @@ import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { initializeLIFF, getUser } from "../services/lineUtils";
-import { getUserData } from "../storage/slices/userSlice";
+import { getEditCustomerInfo, getUserData } from "../storage/slices/userSlice";
 
 const EditProfilePage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -54,7 +54,7 @@ const EditProfilePage = () => {
         sub_district: subDistrict,
         post_code: postCode,
       };
-      console.log(userData);
+       dispatch(getEditCustomerInfo(userData))
     }
   };
 
