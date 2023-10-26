@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import productImage from "../assets/waterpurifier.webp";
-import chumchumBg from "../assets/chumchum-top-bg.jpg";
+import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./../storage/slices/userSlice";
 import { getRedeem } from "./../storage/slices/rewardSlice";
@@ -82,7 +82,7 @@ const RewardDetailPage = () => {
         className=" h-screen "
         style={{
           backgroundRepeat: "no-repeat",
-          backgroundImage: `url(${chumchumBg}) `,
+          backgroundImage: `url(${ChumChumBg}) `,
           backgroundPosition: "0 -10px",
         }}
       >
