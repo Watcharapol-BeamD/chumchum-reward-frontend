@@ -18,6 +18,7 @@ const EditProfilePage = () => {
   const [postCode, setPostCode] = useState("");
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -222,7 +223,7 @@ const EditProfilePage = () => {
         isOpen={showCancelModal}
         confirmMsg="ยกเลิกการแก้ไข"
         cancelMsg="แก้ไขต่อ"
-        message="ต้องการยกเลิกใช่หรือไม่"
+        message="ต้องการยกเลิกใช่หรือไม่?"
         cancelColor="bg-yellow-300"
         confirmColor="bg-red-400"
         onConfirm={handleConfirmCancel}
