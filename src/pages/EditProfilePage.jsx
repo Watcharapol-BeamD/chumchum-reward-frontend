@@ -18,7 +18,7 @@ const EditProfilePage = () => {
   const [postCode, setPostCode] = useState("");
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -37,11 +37,11 @@ const EditProfilePage = () => {
     dispatch(getUserData(data))
       .unwrap()
       .then(() => {
-        setAddress(user.address);
-        setProvince(user.province);
-        setDistrict(user.district);
-        setSubDistrict(user.sub_district);
-        setPostCode(user.post_code);
+        setAddress(user.address === null ? "" : user.address);
+        setProvince(user.province === null ? "" : user.province);
+        setDistrict(user.district === null ? "" : user.district);
+        setSubDistrict(user.sub_district === null ? "" : user.sub_district);
+        setPostCode(user.post_code === null ? "" : user.post_code);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -50,7 +50,6 @@ const EditProfilePage = () => {
   };
 
   const handleSubmit = () => {
- 
     const userData = {
       customer_id: user.customer_id,
       address: address,
@@ -93,7 +92,7 @@ const EditProfilePage = () => {
   };
 
   const handleCancelConfirmation = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     setShowCancelModal(true);
   };
 
@@ -103,14 +102,13 @@ const EditProfilePage = () => {
   };
 
   const handleConfirmCancel = () => {
-
     setShowCancelModal(false);
-    navigate('/reward');
+    navigate("/reward");
   };
 
   const renderEditForm = () => {
     return (
-      <form className="space-y-4 relative"  >
+      <form className="space-y-4 relative">
         <div id="phone-number" className=" ">
           {/* แก้เบอร์ไม่ได้ แสดงอย่างเดียว */}
           <p>เบอร์โทร : </p>
