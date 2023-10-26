@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 import { initializeLIFF, getUser } from "../services/lineUtils";
 import { getEditCustomerInfo, getUserData } from "../storage/slices/userSlice";
+import OnLoadingScreen from './../components/OnLoadingScreen';
 
 const EditProfilePage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useSelector((state) => state.user);
   const [address, setAddress] = useState("");
   const [province, setProvince] = useState("");
@@ -36,6 +37,9 @@ const EditProfilePage = () => {
         setSubDistrict(user.sub_district);
         setPostCode(user.post_code);
         setIsLoading(false);
+        // setTimeout(() => {
+           
+        // }, 1000);
       })
       .catch((err) => {
         console.log(err);
@@ -54,7 +58,7 @@ const EditProfilePage = () => {
         sub_district: subDistrict,
         post_code: postCode,
       };
-       dispatch(getEditCustomerInfo(userData))
+      dispatch(getEditCustomerInfo(userData));
     }
   };
 
@@ -185,7 +189,7 @@ const EditProfilePage = () => {
           backgroundPosition: "0 -10px",
         }}
       >
-        {isLoading ? <OnLoadingScreen /> : renderProfile()}
+        {isLoading ? <OnLoadingScreen/> : renderProfile()}
       </div>
     </div>
   );
