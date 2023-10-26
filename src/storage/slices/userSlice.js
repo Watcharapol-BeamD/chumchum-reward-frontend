@@ -17,12 +17,13 @@ const initialState = {
 export const getUserData = createAsyncThunk(
   "user/getUserData",
   async (userData, { rejectWithValue }) => {
-    console.log(userData);
+ 
     try {
       const res = await liffApiInstance.post(
         `user/get_customer_by_id`,
         userData
       );
+      // console.log(res)
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -34,7 +35,7 @@ export const getEditCustomerInfo = createAsyncThunk(
   "user/getEditCustomerInfo",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = liffApiInstance.post("/user/edit_customer_info", userData);
+      const res = await liffApiInstance.post("user/edit_customer_info", userData);
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
