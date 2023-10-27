@@ -7,6 +7,7 @@ import { getEditCustomerInfo, getUserData } from "../storage/slices/userSlice";
 import OnLoadingScreen from "./../components/OnLoadingScreen";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../components/ConfirmModal";
+import Swal from "sweetalert2";
 
 const EditProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +60,22 @@ const EditProfilePage = () => {
       post_code: postCode,
     };
 
-    dispatch(getEditCustomerInfo(userData));
+    dispatch(getEditCustomerInfo(userData))
+      .unwrap()
+      .then((res) => {
+      if(res.isFinish){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          // title: 'บันทึกสำเร็จ',
+          text:'บันทึกสำเร็จ',
+          showConfirmButton: false,
+          timer: 1000
+        }).then(()=>{
+          navigate('/reward')
+        })
+      }
+      });
   };
 
   const handleAddress = (e) => {
