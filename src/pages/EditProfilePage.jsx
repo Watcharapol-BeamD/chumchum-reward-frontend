@@ -191,12 +191,12 @@ const EditProfilePage = () => {
         <div className="flex justify-center gap-3">
           <button
             onClick={handleCancelConfirmation}
-            className="text-red-400 border border-red-400 p-2 px-8 rounded-full"
+            className="text-purple-600 border border-purple-600 p-2 px-8 rounded-full"
           >
             ยกเลิก
           </button>
           <button
-            className="bg-green-400 p-2  px-8 rounded-full"
+            className="bg-purple-600 p-2  px-8 rounded-full text-white"
             type="button"
             onClick={handleSaveConfirmation}
           >
@@ -237,8 +237,12 @@ const EditProfilePage = () => {
         confirmMsg="บันทึก"
         cancelMsg="ยกเลิก"
         message="ต้องการบันทึกใช่หรือไม่?"
-        cancelColor="bg-red-400"
-        confirmColor="bg-green-400"
+        cancelBgColor="bg-white"
+        confirmBgColor="bg-purple-600"
+        cancelTextColor="text-purple-600"
+        confirmTextColor="text-white"
+        cancelBorderColor="border border-purple-600"
+        confirmBorderColor="border-purple-600"
         onConfirm={handleConfirmSave}
         onCancel={() => setShowSaveModal(false)}
       />
@@ -247,8 +251,12 @@ const EditProfilePage = () => {
         confirmMsg="ยกเลิกการแก้ไข"
         cancelMsg="แก้ไขต่อ"
         message="ต้องการยกเลิกใช่หรือไม่?"
-        cancelColor="bg-yellow-300"
-        confirmColor="bg-red-400"
+        cancelBgColor="bg-white"
+        confirmBgColor="bg-purple-600"
+        cancelTextColor="text-purple-600"
+        confirmTextColor="text-white"
+        cancelBorderColor="border border-purple-600"
+        confirmBorderColor="border-purple-600"
         onConfirm={handleConfirmCancel}
         onCancel={() => setShowCancelModal(false)}
       />

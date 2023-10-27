@@ -143,8 +143,12 @@ const RewardDetailPage = () => {
         confirmMsg="ยืนยัน"
         cancelMsg="ยกเลิก"
         message={`ต้องการแลกรางวัลโดยใช้ดาวชำชำ ${reward.require_point} ดวง ใช่หรือไม่?`}
-        cancelColor="bg-red-400"
-        confirmColor="bg-green-400"
+        cancelBgColor="bg-white"
+        confirmBgColor="bg-purple-600"
+        cancelTextColor="text-purple-600"
+        confirmTextColor="text-white"
+        cancelBorderColor="border border-purple-600"
+        confirmBorderColor="border-purple-600"
         onConfirm={handleConfirmRedeem}
         onCancel={() => setShowSaveModal(false)}
       />
