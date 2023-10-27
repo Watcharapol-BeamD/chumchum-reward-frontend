@@ -97,27 +97,27 @@ const RegisterPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!phoneNumber || !retailerName || !bplusCode) {
-      setFormMsg("Please fill in all required fields.");
-    }
- 
-    if (
-      Validation.getValidatePhoneNumber(phoneNumber) &&
-      Validation.validateRetailerName(retailerName)
-    ) {
-      const userData = {
-        customer_id: userId,
-        retailer_name: retailerName,
-        phone_number: phoneNumber,
-        bplus_code: bplusCode,
-      };
-    
-      dispatch(registerUser(userData))
-        .unwrap()
-        .then((res) => {
-          if (res.isRegisterPass === true) {
-            handleRedirectIfRegister();
-          }
-        });
+      setFormMsg("กรุณากรอกข้อมูลให้ครบถ้วน");
+    } else {
+      if (
+        Validation.getValidatePhoneNumber(phoneNumber) &&
+        Validation.validateRetailerName(retailerName)
+      ) {
+        const userData = {
+          customer_id: userId,
+          retailer_name: retailerName,
+          phone_number: phoneNumber,
+          bplus_code: bplusCode,
+        };
+
+        dispatch(registerUser(userData))
+          .unwrap()
+          .then((res) => {
+            if (res.isRegisterPass === true) {
+              handleRedirectIfRegister();
+            }
+          });
+      }
     }
 
     // if (!phoneNumber || !retailerName || !bplusCode) {
