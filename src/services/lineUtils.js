@@ -5,7 +5,7 @@ import liff from "@line/liff";
 export const initializeLIFF = async () => {
   await liff
     .init({
-      liffId: "2001035033-w8g1yvBj",
+      liffId: import.meta.env.VITE_LIFF_ID,
     })
     .then(async () => {
       if (liff.isLoggedIn()) {
