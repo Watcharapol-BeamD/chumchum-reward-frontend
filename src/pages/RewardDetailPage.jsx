@@ -116,7 +116,7 @@ const RewardDetailPage = () => {
         </div>
         <div className="flex justify-center py-10 relative">
           <button
-            className="bg-purple-600 h-12 w-56 rounded-lg text-white fixed bottom-6"
+            className="bg-purple-600 h-12 w-56 rounded-full text-white fixed bottom-6"
             onClick={handleRedeemConfirmation}
           >
             แลกของรางวัล

@@ -9,7 +9,7 @@ import RegisterPage from "./pages/RegisterPage";
 import RewardPage from "./pages/RewardPage";
 import ProtectRouteOnRegister from "./components/ProtectRouteOnRegister";
 import HomePage from "./pages/HomePage";
-import RewardDetailPage from "./pages/RewardDetailpage";
+import RewardDetailPage from "./pages/RewardDetailPage";
 import EditProfilePage from "./pages/EditProfilePage";
 
 function App() {
