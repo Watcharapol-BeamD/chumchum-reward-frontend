@@ -6,18 +6,22 @@ import { setUser } from "./../storage/slices/userSlice";
 import { getRedeem } from "./../storage/slices/rewardSlice";
 import liff from "@line/liff";
 import { getRewardById } from "../storage/slices/rewardSlice";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import OnLoadingScreen from "../components/OnLoadingScreen";
 import ImageNotFound from "./../components/ImageNotFound";
+import ConfirmModal from "../components/ConfirmModal";
+import Swal from "sweetalert2";
 
 const RewardDetailPage = () => {
   const { user } = useSelector((state) => state.user);
   const { reward } = useSelector((state) => state.reward);
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
   const imageUrl = "https://api-test.chumchumreward.com/images/";
-  const dispatch = useDispatch();
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getRewardById(id))
@@ -31,7 +35,6 @@ const RewardDetailPage = () => {
   }, []);
 
   const handleRedeemReward = () => {
-    console.log(user);
     const userData = {
       customer_id: user.customer_id, //มาจาก line UID
       reward_id: reward.reward_id,
@@ -39,8 +42,42 @@ const RewardDetailPage = () => {
       points_used: reward.require_point,
       reward_name: reward.name,
     };
-    dispatch(getRedeem(userData));
+    dispatch(getRedeem(userData))
+      .unwrap()
+      .then((res) => {
+        if (res.isRedeemSuccess) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "แลกรางวัลสำเร็จ",
+            showConfirmButton: false,
+            timer: 1000,
+          }).then(() => {
+            navigate("/reward");
+          });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            text: "เกิดข้อผิดพลาดในแลกรางวัล",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
   };
+
+  //---------ConfirmModal----------------
+  const handleRedeemConfirmation = () => {
+    setShowSaveModal(true);
+  };
+
+  const handleConfirmRedeem = () => {
+    handleRedeemReward();
+    setShowSaveModal(false);
+  };
+
+  //-------------------------------------
 
   const renderRewardDetails = () => {
     return (
@@ -67,7 +104,7 @@ const RewardDetailPage = () => {
         <div className="flex justify-center py-10 relative">
           <button
             className="bg-purple-600 h-12 w-56 rounded-lg text-white fixed bottom-6"
-            onClick={handleRedeemReward}
+            onClick={handleRedeemConfirmation}
           >
             แลกของรางวัล
           </button>
@@ -77,9 +114,9 @@ const RewardDetailPage = () => {
   };
 
   return (
-    <div className="  w-full min-h-screen">
+    <div className="w-full h-full">
       <div
-        className=" h-screen "
+        className="h-screen"
         style={{
           backgroundRepeat: "no-repeat",
           backgroundImage: `url(${ChumChumBg}) `,
@@ -88,6 +125,17 @@ const RewardDetailPage = () => {
       >
         {isLoading ? <OnLoadingScreen /> : renderRewardDetails()}
       </div>
+
+      <ConfirmModal
+        isOpen={showSaveModal}
+        confirmMsg="ยืนยัน"
+        cancelMsg="ยกเลิก"
+        message={`ต้องการแลกรางวัลโดยใช้ดาวชำชำ ${reward.require_point} ดวง ใช่หรือไม่?`}
+        cancelColor="bg-red-400"
+        confirmColor="bg-green-400"
+        onConfirm={handleConfirmRedeem}
+        onCancel={() => setShowSaveModal(false)}
+      />
     </div>
   );
 };

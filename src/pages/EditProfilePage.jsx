@@ -63,18 +63,25 @@ const EditProfilePage = () => {
     dispatch(getEditCustomerInfo(userData))
       .unwrap()
       .then((res) => {
-      if(res.isFinish){
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          // title: 'บันทึกสำเร็จ',
-          text:'บันทึกสำเร็จ',
-          showConfirmButton: false,
-          timer: 1000
-        }).then(()=>{
-          navigate('/reward')
-        })
-      }
+        if (res.isFinish) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            text: "บันทึกสำเร็จ",
+            showConfirmButton: false,
+            timer: 1000,
+          }).then(() => {
+            navigate("/reward");
+          });
+        } else {
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            text: "เกิดข้อผิดพลาดในการบันทึกข้อมูล",
+            showConfirmButton: false,
+            timer: 1500,
+          })
+        }
       });
   };
 
@@ -103,6 +110,7 @@ const EditProfilePage = () => {
     setPostCode(value);
   };
 
+  //---------ConfirmModal----------------
   const handleSaveConfirmation = () => {
     setShowSaveModal(true);
   };
@@ -121,6 +129,7 @@ const EditProfilePage = () => {
     setShowCancelModal(false);
     navigate("/reward");
   };
+  //-------------------------------------
 
   const renderEditForm = () => {
     return (
