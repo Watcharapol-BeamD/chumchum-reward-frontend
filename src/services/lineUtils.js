@@ -1,5 +1,6 @@
 
 import liff from "@line/liff";
+ 
 
 export const initializeLIFF = async () => {
   await liff

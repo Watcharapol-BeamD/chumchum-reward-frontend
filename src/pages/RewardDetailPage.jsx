@@ -73,8 +73,20 @@ const RewardDetailPage = () => {
   };
 
   const handleConfirmRedeem = () => {
-    handleRedeemReward();
-    setShowSaveModal(false);
+    if (user.points>=reward.require_point) {
+      handleRedeemReward();
+      setShowSaveModal(false);
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        text: "ดาวของคุณไม่เพียงพอ",
+        showConfirmButton: true,
+        // timer: 1000,
+      }).then(() => {
+        setShowSaveModal(false);
+      });
+    }
   };
 
   //-------------------------------------
