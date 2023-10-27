@@ -65,6 +65,7 @@ const RewardPage = () => {
 
         <div className="flex flex-col items-center justify-center bg-purple-600 w-full h-24  p-3 rounded-xl my-2 ">
           <p className="text-center text-white text-lg">ดาวชำชำปัจจุบัน</p>
+          
           <p className="text-center text-green-400 text-lg">
             &#127775; {user.points===null?0:user.points} ดวง
           </p>

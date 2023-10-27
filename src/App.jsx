@@ -18,15 +18,12 @@ function App() {
       <Routes>
         <Route path="/" element={<RegisterPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/reward" element={<RewardPage />} />
-        <Route path="/reward/details/:id" element={<RewardDetailPage />} />
-        <Route path="/edit_profile" element={<EditProfilePage />} />
-        {/* 
+    
         <Route element={<ProtectRouteOnRegister />}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/reward" element={<RewardPage />} />
+          <Route path="/reward/details/:id" element={<RewardDetailPage />} />
+          <Route path="/edit_profile" element={<EditProfilePage />} />
         </Route>
-        <Route path="/reward" element={<RewardPage />} /> */}
       </Routes>
     </div>
   );
