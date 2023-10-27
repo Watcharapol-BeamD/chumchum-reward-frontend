@@ -49,7 +49,7 @@ const RewardPage = () => {
   const renderReward = () => {
     return (
       <div className="h-full p-2">
-        <div id="Profile" className="relative  bg-white w-full h-40 p-2 rounded-xl ">
+        <div id="Profile" className="relative bg-white w-full h-40 p-2 rounded-xl ">
           <p className="text-center  ">สวัสดีตอนบ่าย</p>
           <Link to="/edit_profile" className="absolute right-4 top-1">
             <EditIcon />
@@ -70,7 +70,7 @@ const RewardPage = () => {
           </p>
         </div>
 
-        <div className="space-y-2">{renderItemCardSection()}</div>
+        <div className="space-y-2 pb-4">{renderItemCardSection()}</div>
       </div>
     );
   };
