@@ -81,6 +81,7 @@ const RewardDetailPage = () => {
         position: "center",
         icon: "error",
         text: "ดาวของคุณไม่เพียงพอ",
+        confirmButtonColor:"rgb(147 51 234)",
         showConfirmButton: true,
         // timer: 1000,
       }).then(() => {
