@@ -10,6 +10,7 @@ import { initializeLIFF, getUser } from "../services/lineUtils";
 import OnLoadingScreen from "./../components/OnLoadingScreen";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
+import Greeting from "../components/Greeting";
 
 const RewardPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -17,13 +18,15 @@ const RewardPage = () => {
   const dispatch = useDispatch();
   const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
   const [isLoading, setIsLoading] = useState(true);
+  const greeting = Greeting();
 
   useEffect(() => {
     setUpData();
   }, []);
 
   const setUpData = async () => {
-    await initializeLIFF(), await getUserinfo();
+    await initializeLIFF();
+    await getUserinfo();
     await dispatch(getReward());
   };
 
@@ -49,8 +52,11 @@ const RewardPage = () => {
   const renderReward = () => {
     return (
       <div className="h-full p-2">
-        <div id="Profile" className="relative bg-white w-full h-40 p-2 rounded-xl ">
-          <p className="text-center  ">สวัสดีตอนบ่าย</p>
+        <div
+          id="Profile"
+          className="relative bg-white w-full h-40 p-2 rounded-xl "
+        >
+          <p className="text-center  ">{greeting}</p>
           <Link to="/edit_profile" className="absolute right-4 top-1">
             <EditIcon />
           </Link>
@@ -65,9 +71,9 @@ const RewardPage = () => {
 
         <div className="flex flex-col items-center justify-center bg-purple-600 w-full h-24  p-3 rounded-xl my-2 ">
           <p className="text-center text-white text-lg">ดาวชำชำปัจจุบัน</p>
-          
+
           <p className="text-center text-green-400 text-lg">
-            &#127775; {user.points===null?0:user.points} ดวง
+            &#127775; {user.points === null ? 0 : user.points} ดวง
           </p>
         </div>
 
