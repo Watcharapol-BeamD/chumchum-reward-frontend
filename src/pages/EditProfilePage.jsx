@@ -8,6 +8,7 @@ import OnLoadingScreen from "./../components/OnLoadingScreen";
 import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../components/ConfirmModal";
 import Swal from "sweetalert2";
+import Alerts from "../services/Alerts.js";
 
 const EditProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -64,23 +65,11 @@ const EditProfilePage = () => {
       .unwrap()
       .then((res) => {
         if (res.isFinish) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "บันทึกสำเร็จ",
-            showConfirmButton: false,
-            timer: 1000,
-          }).then(() => {
+          Alerts.saveEditInfoComplete().then(() => {
             navigate("/reward");
           });
         } else {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            text: "เกิดข้อผิดพลาดในการบันทึกข้อมูล",
-            showConfirmButton: false,
-            timer: 1500,
-          })
+          Alerts.saveEditInfoFail();
         }
       });
   };

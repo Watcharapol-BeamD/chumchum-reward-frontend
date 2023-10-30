@@ -11,6 +11,7 @@ import OnLoadingScreen from "../components/OnLoadingScreen";
 import ImageNotFound from "./../components/ImageNotFound";
 import ConfirmModal from "../components/ConfirmModal";
 import Swal from "sweetalert2";
+import Alerts from "../services/Alerts";
 
 const RewardDetailPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -46,23 +47,11 @@ const RewardDetailPage = () => {
       .unwrap()
       .then((res) => {
         if (res.isRedeemSuccess) {
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            text: "แลกรางวัลสำเร็จ",
-            showConfirmButton: false,
-            timer: 1000,
-          }).then(() => {
+          Alerts.redemptionComplete().then(() => {
             navigate("/reward");
           });
         } else {
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            text: "เกิดข้อผิดพลาดในแลกรางวัล",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+          Alerts.redemptionFail();
         }
       });
   };
@@ -73,18 +62,11 @@ const RewardDetailPage = () => {
   };
 
   const handleConfirmRedeem = () => {
-    if (user.points>=reward.require_point) {
+    if (user.points >= reward.require_point) {
       handleRedeemReward();
       setShowSaveModal(false);
     } else {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        text: "ดาวของคุณไม่เพียงพอ",
-        confirmButtonColor:"rgb(147 51 234)",
-        showConfirmButton: true,
-        // timer: 1000,
-      }).then(() => {
+      Alerts.pointsNotEnough().then(() => {
         setShowSaveModal(false);
       });
     }
