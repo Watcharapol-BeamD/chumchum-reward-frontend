@@ -42,6 +42,8 @@ const RewardDetailPage = () => {
       quantity: 1, // 1 อันตายตัว
       points_used: reward.require_point,
       reward_name: reward.name,
+      bplus_code: user.bplus_code,
+      retailer_name: user.retailer_name,
     };
     dispatch(getRedeem(userData))
       .unwrap()
