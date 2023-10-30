@@ -11,6 +11,7 @@ import ProtectRouteOnRegister from "./components/ProtectRouteOnRegister";
 import HomePage from "./pages/HomePage";
 import RewardDetailPage from "./pages/RewardDetailPage";
 import EditProfilePage from "./pages/EditProfilePage";
+import AlertPage from "./pages/AlertPage";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<RegisterPage />} />
         <Route path="/register" element={<RegisterPage />} />
-    
+        <Route path="/alert_page" element={<AlertPage />} />
         <Route element={<ProtectRouteOnRegister />}>
           <Route path="/reward" element={<RewardPage />} />
           <Route path="/reward/details/:id" element={<RewardDetailPage />} />
