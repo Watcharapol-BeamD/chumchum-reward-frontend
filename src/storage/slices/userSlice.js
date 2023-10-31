@@ -9,9 +9,9 @@ const initialState = {
   displayName: "",
   pictureUrl: "",
   userId: "",
-  user: localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null,
+  // user: localStorage.getItem("user")  ? JSON.parse(localStorage.getItem("user")) : null,
+  user:{}
+   
 };
 
 export const getUserData = createAsyncThunk(
@@ -61,7 +61,7 @@ const userSlice = createSlice({
       .addCase(getUserData.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
+        // localStorage.setItem("user", JSON.stringify(action.payload));
         state.msg = action.payload.msg;
       })
       .addCase(getUserData.rejected, (state, action) => {
