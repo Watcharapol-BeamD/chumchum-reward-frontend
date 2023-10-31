@@ -9,9 +9,9 @@ const initialState = {
   displayName: "",
   pictureUrl: "",
   userId: "",
-  user: localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null,
+  user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
+  // user: null
+  
 };
 
 export const getUserData = createAsyncThunk(

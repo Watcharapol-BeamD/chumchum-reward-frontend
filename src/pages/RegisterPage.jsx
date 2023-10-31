@@ -23,7 +23,6 @@ const RegisterPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [retailerName, setRetailerName] = useState("");
   const [bplusCode, setBplusCode] = useState("");
-  const liftId = "2001035033-w8g1yvBj";
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [formMsg, setFormMsg] = useState("");
@@ -47,10 +46,10 @@ const RegisterPage = () => {
   };
 
   const getUserInfo = async () => {
+    //get user info from line
     const userData = await getUser();
     setUserId(userData.userId);
     const data = { customer_id: userData.userId };
-    dispatch(getUserData(data));
 
     dispatch(checkUserRegister({ customer_id: userData.userId }))
       .unwrap()
@@ -61,6 +60,7 @@ const RegisterPage = () => {
           setIsLoading(false);
         }
       });
+    dispatch(getUserData(data));
   };
 
   const handlePhoneNumber = (e) => {
