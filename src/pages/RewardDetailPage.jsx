@@ -16,7 +16,6 @@ import Alerts from "../services/Alerts";
 const RewardDetailPage = () => {
   const { user } = useSelector((state) => state.user);
   const { reward } = useSelector((state) => state.reward);
-  const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
   const imageUrl = "https://api-test.chumchumreward.com/images/";
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
