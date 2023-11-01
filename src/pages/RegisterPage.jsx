@@ -23,7 +23,7 @@ const RegisterPage = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [retailerName, setRetailerName] = useState("");
   const [bplusCode, setBplusCode] = useState("");
-  const liftId = "2001035033-w8g1yvBj";
+ 
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [formMsg, setFormMsg] = useState("");
@@ -120,25 +120,7 @@ const RegisterPage = () => {
       }
     }
 
-    // if (!phoneNumber || !retailerName || !bplusCode) {
-    //   setFormMsg("Please fill in all required fields.");
-    // } else {
-
-    //   const userData = {
-    //     customer_id: userId,
-    //     retailer_name: retailerName,
-    //     phone_number: phoneNumber,
-    //     bplus_code: bplusCode,
-    //   };
-    //   dispatch(registerUser(userData))
-    //     .unwrap()
-    //     .then((res) => {
-    //       if (res.isRegisterPass === true) {
-    //         handleRedirectIfRegister();
-    //       }
-    //     });
-
-    // }
+ 
   };
 
   const renderRegister = () => {

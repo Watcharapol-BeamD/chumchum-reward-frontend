@@ -21,6 +21,7 @@ const RewardPage = () => {
   const greeting = Greeting();
 
   useEffect(() => {
+console.log(    liff.getOS())
     setUpData();
   }, []);
 
@@ -83,7 +84,7 @@ const RewardPage = () => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full ">
       <div
         className=" h-screen "
         style={{

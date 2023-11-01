@@ -6,7 +6,7 @@ const Greeting = () => {
 
   const getGreeting = (currentTime) => {
     if (currentTime >= 5 && currentTime < 12) {
-      return 'สวัสกีตอนเช้า';
+      return 'สวัสดีตอนเช้า';
     } else if (currentTime >= 12 && currentTime < 18) {
       return 'สวัสดีตอนกลางวัน';
     } else if (currentTime >= 18 && currentTime < 22) {

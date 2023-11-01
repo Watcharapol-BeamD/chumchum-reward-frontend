@@ -6,11 +6,11 @@ import ChumChumIcon from "../assets/ChumChumLogo-1.png";
 const AlertPage = () => {
   const navigate = useNavigate();
 
-//   useEffect(() => {
-//     if (liff.getOS() !== "web") {
-//       navigate("/reward");
-//     }
-//   }, []);
+  useEffect(() => {
+    if (liff.getOS() !== "web") {
+      navigate("/reward");
+    }
+  }, []);
 
   const renderAlertPage = () => {
     return (

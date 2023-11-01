@@ -6,9 +6,10 @@ export const initializeLIFF = async () => {
       liffId: import.meta.env.VITE_LIFF_ID,
     })
     .then(async () => {
-      // if (liff.getOS() === "web") {
-      //   window.location.replace("/alert_page");
-      // }
+      
+      if (liff.getOS() === "web") {
+        window.location.replace("/alert_page");
+      }
 
       if (liff.isLoggedIn()) {
         return getUser();
