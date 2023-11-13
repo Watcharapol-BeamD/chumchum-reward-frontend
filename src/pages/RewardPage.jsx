@@ -16,12 +16,12 @@ const RewardPage = () => {
   const { user } = useSelector((state) => state.user);
   const { rewardList } = useSelector((state) => state.reward);
   const dispatch = useDispatch();
-  const giftCard = "https://cdn-icons-png.flaticon.com/512/612/612886.png";
+
   const [isLoading, setIsLoading] = useState(true);
   const greeting = Greeting();
 
   useEffect(() => {
-console.log(    liff.getOS())
+    console.log(liff.getOS());
     setUpData();
   }, []);
 
@@ -53,6 +53,8 @@ console.log(    liff.getOS())
   const renderReward = () => {
     return (
       <div className="h-full p-2">
+        {console.log(rewardList)}
+        {/* {console.log(user)} */}
         <div
           id="Profile"
           className="relative bg-white w-full h-40 p-2 rounded-xl "
