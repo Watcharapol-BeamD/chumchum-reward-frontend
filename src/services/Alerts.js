@@ -31,6 +31,16 @@ class Alerts {
     });
   }
 
+  addressRequire() {
+    return Swal.fire({
+      position: "center",
+      icon: "info",
+      text: "กรุณากรอกข้อมูลการจัดส่งและลองใหม่",
+      confirmButtonColor: "rgb(147 51 234)",
+      showConfirmButton: true,
+    });
+  }
+
   saveEditInfoComplete() {
     return Swal.fire({
       position: "center",

@@ -10,14 +10,13 @@ const initialState = {
   pictureUrl: "",
   userId: "",
   // user: localStorage.getItem("user")  ? JSON.parse(localStorage.getItem("user")) : null,
-  user:{}
-   
+  user: {},
+  customerGroups: [],
 };
 
 export const getUserData = createAsyncThunk(
   "user/getUserData",
   async (userData, { rejectWithValue }) => {
- 
     try {
       const res = await liffApiInstance.post(
         `user/get_customer_by_id`,
@@ -35,7 +34,22 @@ export const getEditCustomerInfo = createAsyncThunk(
   "user/getEditCustomerInfo",
   async (userData, { rejectWithValue }) => {
     try {
-      const res = await liffApiInstance.post("user/edit_customer_info", userData);
+      const res = await liffApiInstance.post(
+        "user/edit_customer_info",
+        userData
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getCustomerGroup = createAsyncThunk(
+  "user/getCustomerGroup",
+  async (args, { rejectWithValue }) => {
+    try {
+      const res = await liffApiInstance.get("user/get_customer_group");
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -78,6 +92,15 @@ const userSlice = createSlice({
       })
       .addCase(getEditCustomerInfo.rejected, (state, action) => {
         state.isLoading = false;
+        state.msg = action.payload.msg;
+      })
+      .addCase(getCustomerGroup.pending, (state) => {
+        state.msg = null;
+      })
+      .addCase(getCustomerGroup.fulfilled, (state, action) => {
+        state.customerGroups = action.payload.customerGroups;
+      })
+      .addCase(getCustomerGroup.rejected, (state, action) => {
         state.msg = action.payload.msg;
       });
   },
