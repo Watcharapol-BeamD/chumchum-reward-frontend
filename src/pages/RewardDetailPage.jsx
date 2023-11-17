@@ -63,6 +63,11 @@ const RewardDetailPage = () => {
   };
 
   const handleConfirmRedeem = () => {
+    if (!checkHasAddress()) {
+      setShowSaveModal(false);
+      Alerts.addressRequire()
+      return navigate("/edit_profile");
+    }
     if (user.points >= reward.require_point) {
       handleRedeemReward();
       setShowSaveModal(false);
@@ -74,6 +79,20 @@ const RewardDetailPage = () => {
   };
 
   //-------------------------------------
+
+  const checkHasAddress = () => {
+    if (
+      user.address &&
+      user.district &&
+      user.post_code &&
+      user.province &&
+      user.sub_district
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const renderRewardDetails = () => {
     return (
