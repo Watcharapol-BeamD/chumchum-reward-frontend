@@ -28,7 +28,7 @@ const RewardPage = () => {
   const setUpData = async () => {
     await initializeLIFF();
     await getUserinfo();
-    await dispatch(getReward());
+    await dispatch(getReward(user.group_id));
   };
 
   const getUserinfo = async () => {
