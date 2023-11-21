@@ -102,6 +102,7 @@ const RewardDetailPage = () => {
   const renderRewardDetails = () => {
     return (
       <div className="p-2 w-screen">
+        {console.log(reward)}
         <div className="bg-white w-full h-92 rounded-2xl overflow-hidden shadow-lg ">
           <div className="flex justify-center items-center    h-full">
             <div className="h-84">
@@ -122,15 +123,31 @@ const RewardDetailPage = () => {
           <p className="p-1 ">{reward.description}</p>
         </div>
         <div className="flex justify-center py-10 relative">
-          <button
-            className={`bg-purple-600 h-12 w-56 rounded-full text-white fixed bottom-6 ${
-              isRedeemButtonAvailable ? "" : "opacity-50 cursor-not-allowed"
-            }`}
-            onClick={handleRedeemConfirmation}
-            disabled={!isRedeemButtonAvailable}
-          >
-            แลกของรางวัล {!isRedeemButtonAvailable&&<AutorenewIcon className="animate-spin"/>}
-          </button>
+          {reward.quantity === 0 ? (
+            <button
+              className={`bg-gray-200 h-12 w-56 rounded-full text-gray-500 fixed bottom-6`}
+              onClick={handleRedeemConfirmation}
+              disabled
+            >
+              จำนวนสิทธิเต็ม
+              {!isRedeemButtonAvailable && (
+                <AutorenewIcon className="animate-spin" />
+              )}
+            </button>
+          ) : (
+            <button
+              className={`bg-purple-600 h-12 w-56 rounded-full text-white fixed bottom-6 ${
+                isRedeemButtonAvailable ? "" : "opacity-50 cursor-not-allowed"
+              }`}
+              onClick={handleRedeemConfirmation}
+              disabled={!isRedeemButtonAvailable}
+            >
+              แลกของรางวัล
+              {!isRedeemButtonAvailable && (
+                <AutorenewIcon className="animate-spin" />
+              )}
+            </button>
+          )}
         </div>
       </div>
     );
