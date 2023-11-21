@@ -123,7 +123,7 @@ const RewardDetailPage = () => {
           <p className="p-1 ">{reward.description}</p>
         </div>
         <div className="flex justify-center py-10 relative">
-          {reward.quantity === 0 ? (
+          {reward.quantity > 0 ? (
             <button
               className={`bg-gray-200 h-12 w-56 rounded-full text-gray-500 fixed bottom-6`}
               onClick={handleRedeemConfirmation}
