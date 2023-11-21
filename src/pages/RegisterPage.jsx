@@ -17,6 +17,8 @@ import Validation from "../services/Validation";
 
 const RegisterPage = () => {
   const { user } = useSelector((state) => state.user);
+  const { msg } = useSelector((state) => state.auth);
+   
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState("");
@@ -183,7 +185,8 @@ const RegisterPage = () => {
               />
             </div>
             <p className="text-red-500 text-center"> {formMsg && formMsg}</p>
-
+            <p className="text-red-500 text-center"> {msg && msg}</p>
+             
             <div className="flex justify-center pt-4">
               <button
                 className="bg-purple-600 h-12 w-56 rounded-full text-white"
