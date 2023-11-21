@@ -12,6 +12,7 @@ import ImageNotFound from "./../components/ImageNotFound";
 import ConfirmModal from "../components/ConfirmModal";
 import Swal from "sweetalert2";
 import Alerts from "../services/Alerts";
+import AutorenewIcon from "@mui/icons-material/Autorenew";
 
 const RewardDetailPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -20,6 +21,7 @@ const RewardDetailPage = () => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [showSaveModal, setShowSaveModal] = useState(false);
+  const [isRedeemButtonAvailable, setIsRedeemButtonAvailable] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -44,15 +46,18 @@ const RewardDetailPage = () => {
       bplus_code: user.bplus_code,
       retailer_name: user.retailer_name,
     };
+    setIsRedeemButtonAvailable(false);
     dispatch(getRedeem(userData))
       .unwrap()
       .then((res) => {
         if (res.isRedeemSuccess) {
           Alerts.redemptionComplete().then(() => {
+            setIsRedeemButtonAvailable(true);
             navigate("/reward");
           });
         } else {
           Alerts.redemptionFail();
+          setIsRedeemButtonAvailable(true);
         }
       });
   };
@@ -65,7 +70,7 @@ const RewardDetailPage = () => {
   const handleConfirmRedeem = () => {
     if (!checkHasAddress()) {
       setShowSaveModal(false);
-      Alerts.addressRequire()
+      Alerts.addressRequire();
       return navigate("/edit_profile");
     }
     if (user.points >= reward.require_point) {
@@ -118,10 +123,13 @@ const RewardDetailPage = () => {
         </div>
         <div className="flex justify-center py-10 relative">
           <button
-            className="bg-purple-600 h-12 w-56 rounded-full text-white fixed bottom-6"
+            className={`bg-purple-600 h-12 w-56 rounded-full text-white fixed bottom-6 ${
+              isRedeemButtonAvailable ? "" : "opacity-50 cursor-not-allowed"
+            }`}
             onClick={handleRedeemConfirmation}
+            disabled={!isRedeemButtonAvailable}
           >
-            แลกของรางวัล
+            แลกของรางวัล {!isRedeemButtonAvailable&&<AutorenewIcon className="animate-spin"/>}
           </button>
         </div>
       </div>
