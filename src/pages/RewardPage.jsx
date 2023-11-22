@@ -60,7 +60,7 @@ const RewardPage = () => {
           className="relative bg-white w-full h-40 p-2 rounded-xl "
         >
           <p className="text-center  ">{greeting}</p>
-          <Link to="/edit_profile" className="absolute right-4 top-1">
+          <Link to="/client/edit_profile" className="absolute right-4 top-1">
             <EditIcon />
           </Link>
 

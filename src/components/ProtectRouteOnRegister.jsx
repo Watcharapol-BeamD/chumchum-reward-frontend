@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import liff from "@line/liff";
 import { liffApiInstance } from "../services/liffApi";
 
-const ProtectRouteOnRegister = ({ redirectPath = "/register", children }) => {
+const ProtectRouteOnRegister = ({ redirectPath = "/client/register", children }) => {
   const location = useLocation();
   const user = useSelector((state) => state.user.user.customer_id);
  

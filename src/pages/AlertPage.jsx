@@ -8,7 +8,7 @@ const AlertPage = () => {
 
   useEffect(() => {
     if (liff.getOS() !== "web") {
-      navigate("/reward");
+      navigate("/client/reward");
     }
   }, []);
 
