@@ -30,7 +30,7 @@ const RewardCard = ({ item }) => {
           </div>
           <div className="w-3/5   flex justify-center">
             <button className="bg-gray-200 py-1 px-2 rounded-full ">
-              <Link to={`/reward/details/${item.reward_id}`}>แลกของรางวัล</Link>
+              <Link to={`/client/reward/details/${item.reward_id}`}>แลกของรางวัล</Link>
             </button>
           </div>
         </div>

@@ -36,7 +36,7 @@ const RegisterPage = () => {
   const [retailerCodeMsg, setRetailerCodeMsg] = useState("");
 
   const handleRedirectIfRegister = () => {
-    navigate("/reward");
+    navigate("/client/reward");
   };
 
   useEffect(() => {

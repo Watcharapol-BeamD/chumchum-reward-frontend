@@ -53,7 +53,7 @@ const RewardDetailPage = () => {
         if (res.isRedeemSuccess) {
           Alerts.redemptionComplete().then(() => {
             setIsRedeemButtonAvailable(true);
-            navigate("/reward");
+            navigate("/client/reward");
           });
         } else {
           Alerts.redemptionFail();
@@ -71,7 +71,7 @@ const RewardDetailPage = () => {
     if (!checkHasAddress()) {
       setShowSaveModal(false);
       Alerts.addressRequire();
-      return navigate("/edit_profile");
+      return navigate("/client/edit_profile");
     }
     if (user.points >= reward.require_point) {
       handleRedeemReward();

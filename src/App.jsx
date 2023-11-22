@@ -17,13 +17,13 @@ function App() {
   return (
     <div className="font-prompt">
       <Routes>
-        <Route path="/" element={<RegisterPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/alert_page" element={<AlertPage />} />
+        <Route path="client/" element={<RegisterPage />} />
+        <Route path="client/register" element={<RegisterPage />} />
+        <Route path="client/alert_page" element={<AlertPage />} />
         <Route element={<ProtectRouteOnRegister />}>
-          <Route path="/reward" element={<RewardPage />} />
-          <Route path="/reward/details/:id" element={<RewardDetailPage />} />
-          <Route path="/edit_profile" element={<EditProfilePage />} />
+          <Route path="client/reward" element={<RewardPage />} />
+          <Route path="client/reward/details/:id" element={<RewardDetailPage />} />
+          <Route path="client/edit_profile" element={<EditProfilePage />} />
         </Route>
       </Routes>
     </div>

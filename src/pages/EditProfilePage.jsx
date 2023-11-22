@@ -66,7 +66,7 @@ const EditProfilePage = () => {
       .then((res) => {
         if (res.isFinish) {
           Alerts.saveEditInfoComplete().then(() => {
-            navigate("/reward");
+            navigate("/client/reward");
           });
         } else {
           Alerts.saveEditInfoFail();
@@ -116,7 +116,7 @@ const EditProfilePage = () => {
 
   const handleConfirmCancel = () => {
     setShowCancelModal(false);
-    navigate("/reward");
+    navigate("/client/reward");
   };
   //-------------------------------------
 
