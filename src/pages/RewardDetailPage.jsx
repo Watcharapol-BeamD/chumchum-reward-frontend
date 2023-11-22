@@ -125,17 +125,6 @@ const RewardDetailPage = () => {
         <div className="flex justify-center py-10 relative">
           {reward.quantity > 0 ? (
             <button
-              className={`bg-gray-200 h-12 w-56 rounded-full text-gray-500 fixed bottom-6`}
-              onClick={handleRedeemConfirmation}
-              disabled
-            >
-              จำนวนสิทธิเต็ม
-              {!isRedeemButtonAvailable && (
-                <AutorenewIcon className="animate-spin" />
-              )}
-            </button>
-          ) : (
-            <button
               className={`bg-purple-600 h-12 w-56 rounded-full text-white fixed bottom-6 ${
                 isRedeemButtonAvailable ? "" : "opacity-50 cursor-not-allowed"
               }`}
@@ -143,6 +132,17 @@ const RewardDetailPage = () => {
               disabled={!isRedeemButtonAvailable}
             >
               แลกของรางวัล
+              {!isRedeemButtonAvailable && (
+                <AutorenewIcon className="animate-spin" />
+              )}
+            </button>
+          ) : (
+            <button
+              className={`bg-gray-200 h-12 w-56 rounded-full text-gray-500 fixed bottom-6`}
+              onClick={handleRedeemConfirmation}
+              disabled
+            >
+              จำนวนสิทธิเต็ม
               {!isRedeemButtonAvailable && (
                 <AutorenewIcon className="animate-spin" />
               )}
