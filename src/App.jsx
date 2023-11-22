@@ -17,6 +17,7 @@ function App() {
   return (
     <div className="font-prompt">
       <Routes>
+      <Route path="/" element={<AlertPage />} />
         <Route path="client/" element={<RegisterPage />} />
         <Route path="client/register" element={<RegisterPage />} />
         <Route path="client/alert_page" element={<AlertPage />} />
