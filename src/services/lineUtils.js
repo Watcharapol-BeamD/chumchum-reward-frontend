@@ -8,7 +8,7 @@ export const initializeLIFF = async () => {
     .then(async () => {
       
       if (liff.getOS() === "web") {
-        window.location.replace("/alert_page");
+        window.location.replace("client/alert_page");
       }
 
       if (liff.isLoggedIn()) {
