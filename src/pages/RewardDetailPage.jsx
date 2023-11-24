@@ -17,7 +17,7 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 const RewardDetailPage = () => {
   const { user } = useSelector((state) => state.user);
   const { reward } = useSelector((state) => state.reward);
-  const imageUrl = "https://api-test.chumchumreward.com/images/";
+  const imageUrl = `${import.meta.env.VITE_IMAGE_URL}images/`;
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [showSaveModal, setShowSaveModal] = useState(false);
