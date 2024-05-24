@@ -4,7 +4,7 @@ import ImageNotFound from "./ImageNotFound";
 
 const RewardCard = ({ item }) => {
   const imageUrl = `${import.meta.env.VITE_IMAGE_URL}images/`;
-
+  
   return (
     <div className="flex w-full h-36 p-2 rounded-xl shadow-md">
       <div className="w-1/3 flex justify-center ">

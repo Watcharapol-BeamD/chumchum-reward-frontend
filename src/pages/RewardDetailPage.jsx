@@ -24,7 +24,7 @@ const RewardDetailPage = () => {
   const [isRedeemButtonAvailable, setIsRedeemButtonAvailable] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+ 
   useEffect(() => {
     dispatch(getRewardById(id))
       .unwrap()
