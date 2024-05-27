@@ -46,6 +46,7 @@ const RewardDetailPage = () => {
       bplus_code: user.bplus_code,
       retailer_name: user.retailer_name,
     };
+    console.log(userData)
     setIsRedeemButtonAvailable(false);
     dispatch(getRedeem(userData))
       .unwrap()

@@ -40,16 +40,22 @@ const RegisterPage = () => {
   };
 
   useEffect(() => {
+    console.log('test')
+    console.log(import.meta.env.VITE_LIFF_ID)
     setUpData();
   }, []);
 
   const setUpData = async () => {
-    await initializeLIFF();
+    await initializeLIFF().catch((error)=>{
+      console.log(error)
+    });
     await getUserInfo();
   };
 
   const getUserInfo = async () => {
     const userData = await getUser();
+ 
+    console.log(userData)
     setUserId(userData.userId);
     const data = { customer_id: userData.userId };
     dispatch(getUserData(data));
