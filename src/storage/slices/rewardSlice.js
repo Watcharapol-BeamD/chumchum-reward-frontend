@@ -18,7 +18,7 @@ export const getReward = createAsyncThunk(
         `reward/get_reward_by_time_and_group`,
         data
       );
-      console.log(res.data);
+
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -33,7 +33,7 @@ export const getRewardById = createAsyncThunk(
       const res = await liffApiInstance.get(
         `reward/get_reward_by_id/${reward_id}`
       );
-      console.log(res.data);
+
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -45,7 +45,6 @@ export const getRedeem = createAsyncThunk(
   "reward/getRedeem",
 
   async (userData, { rejectWithValue }) => {
-    console.log(userData);
     try {
       const res = await liffApiInstance.post(`reward/redeem_reward`, userData);
       return res.data;

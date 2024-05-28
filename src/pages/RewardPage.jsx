@@ -53,7 +53,7 @@ const RewardPage = () => {
   const renderReward = () => {
     return (
       <div className="h-full p-2">
-        {console.log(rewardList)}
+  
         {/* {console.log(user)} */}
         <div
           id="Profile"

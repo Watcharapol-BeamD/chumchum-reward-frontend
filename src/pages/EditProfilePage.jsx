@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import ConfirmModal from "../components/ConfirmModal";
 import Swal from "sweetalert2";
 import Alerts from "../services/Alerts.js";
+import Validation from "../services/Validation.js";
 
 const EditProfilePage = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,6 +21,12 @@ const EditProfilePage = () => {
   const [postCode, setPostCode] = useState("");
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
+
+  const [addressMsg, setAddressMsg] = useState("");
+  const [provinceMsg, setProvinceMsg] = useState("");
+  const [districtMsg, setDistrictMsg] = useState("");
+  const [subDistrictMsg, setSubDistrictMsg] = useState("");
+  const [postCodeMsg, setPostCodeMsg] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,42 +68,86 @@ const EditProfilePage = () => {
       post_code: postCode,
     };
 
-    dispatch(getEditCustomerInfo(userData))
-      .unwrap()
-      .then((res) => {
-        if (res.isFinish) {
-          Alerts.saveEditInfoComplete().then(() => {
-            navigate("/client/reward");
-          });
-        } else {
-          Alerts.saveEditInfoFail();
-        }
-      });
+    if (
+      Validation.getValidatePostCode(postCode) &&
+      address &&
+      province &&
+      district &&
+      subDistrict
+    ) {
+      dispatch(getEditCustomerInfo(userData))
+        .unwrap()
+        .then((res) => {
+          if (res.isFinish) {
+            Alerts.saveEditInfoComplete().then(() => {
+              navigate("/client/reward");
+            });
+          } else {
+            Alerts.saveEditInfoFail();
+          }
+        });
+    } else {
+      setShowSaveModal(false);
+      setAddressMsg(address ? "" : "กรุณากรอกข้อมูลที่อยู่");
+      setProvinceMsg(province ? "" : "กรุณากรอกข้อมูลจังหวัด");
+      setDistrictMsg(district ? "" : "กรุณากรอกข้อมูลเขต/อำเภอ");
+      setSubDistrictMsg(subDistrict ? "" : "กรุณากรอกข้อมูลเขต/ตำบล");
+      setPostCodeMsg(
+        Validation.getValidatePostCode(postCode)
+          ? ""
+          : "กรุณากรอกรหัสไปรษณีย์ให้ครบถ้วน และต้องมี 5 หลัก"
+      );
+    }
   };
 
   const handleAddress = (e) => {
     const value = e.target.value;
     setAddress(value);
+    if (value !== "") {
+      setAddressMsg("");
+    } else {
+      setAddressMsg("กรุณากรอกข้อมูลที่อยู่");
+    }
   };
 
   const handleProvince = (e) => {
     const value = e.target.value;
     setProvince(value);
+    if (value !== "") {
+      setProvinceMsg("");
+    } else {
+      setProvinceMsg("กรุณากรอกข้อมูลจังหวัด");
+    }
   };
 
   const handleDistrict = (e) => {
     const value = e.target.value;
     setDistrict(value);
+    if (value !== "") {
+      setDistrictMsg("");
+    } else {
+      setDistrictMsg("กรุณากรอกข้อมูลเขต/อำเภอ");
+    }
   };
 
   const handleSubDistrict = (e) => {
     const value = e.target.value;
     setSubDistrict(value);
+    if (value !== "") {
+      setSubDistrictMsg("");
+    } else {
+      setSubDistrictMsg("กรุณากรอกข้อมูลเขต/ตำบล");
+    }
   };
 
   const handlePostCode = (e) => {
     const value = e.target.value;
     setPostCode(value);
+    if (Validation.getValidatePostCode(value)) {
+      setPostCodeMsg("");
+    } else {
+      setPostCodeMsg("กรุณากรอกรหัสไปรษณีย์ให้ครบถ้วน และต้องมี 5 หลัก");
+    }
   };
 
   //---------ConfirmModal----------------
@@ -140,6 +191,7 @@ const EditProfilePage = () => {
             onChange={handleAddress}
             value={address}
           />
+          {addressMsg && <p className="text-red-400">{addressMsg}</p>}
         </div>
         <div id="province">
           <p>จังหวัด : </p>
@@ -149,6 +201,7 @@ const EditProfilePage = () => {
             onChange={handleProvince}
             value={province}
           />
+          {provinceMsg && <p className="text-red-400">{provinceMsg}</p>}
         </div>
         <div id="district" className="">
           <p>เขต/อำเภอ : </p>
@@ -158,6 +211,7 @@ const EditProfilePage = () => {
             onChange={handleDistrict}
             value={district}
           />
+          {districtMsg && <p className="text-red-400">{districtMsg}</p>}
         </div>
         <div id="sub-district" className="">
           <p>แขวง/ตำบล : </p>
@@ -167,15 +221,19 @@ const EditProfilePage = () => {
             onChange={handleSubDistrict}
             value={subDistrict}
           />
+
+          {subDistrictMsg && <p className="text-red-400">{subDistrictMsg}</p>}
         </div>
         <div id="postCode-code" className="">
           <p>รหัสไปรษณีย์ : </p>
           <input
             type="number"
+            maxLength={5}
             className="h-12 w-full p-1 px-2 outline-none  border border-gray-300 rounded-lg"
             onChange={handlePostCode}
             value={postCode}
           />
+          {postCodeMsg && <p className="text-red-400">{postCodeMsg}</p>}
         </div>
         <div className="flex justify-center gap-3">
           <button
