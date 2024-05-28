@@ -74,6 +74,18 @@ class Validation {
     }
   }
 
+  getValidatePostCode(input) {
+    const inputCheck = /^\d{5}$/;
+
+    if (input.match(" ") || "") {
+      return false;
+    } else if (input.match(inputCheck)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   getValidateInput(input) {
     const inputCheck = /^[a-zA-Z0-9#?!@$ %^&*._-]{1,128}$/;
     if (input.match(" ") || "") {

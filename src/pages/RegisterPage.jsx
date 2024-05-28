@@ -18,14 +18,14 @@ import Validation from "../services/Validation";
 const RegisterPage = () => {
   const { user } = useSelector((state) => state.user);
   const { msg } = useSelector((state) => state.auth);
-   
+
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [userId, setUserId] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [retailerName, setRetailerName] = useState("");
   const [bplusCode, setBplusCode] = useState("");
- 
+
   const [isRegister, setIsRegister] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [formMsg, setFormMsg] = useState("");
@@ -40,22 +40,19 @@ const RegisterPage = () => {
   };
 
   useEffect(() => {
-    console.log('test')
-    console.log(import.meta.env.VITE_LIFF_ID)
     setUpData();
   }, []);
 
   const setUpData = async () => {
-    await initializeLIFF().catch((error)=>{
-      console.log(error)
+    await initializeLIFF().catch((error) => {
+      console.log(error);
     });
     await getUserInfo();
   };
 
   const getUserInfo = async () => {
     const userData = await getUser();
- 
-    console.log(userData)
+
     setUserId(userData.userId);
     const data = { customer_id: userData.userId };
     dispatch(getUserData(data));
@@ -127,8 +124,6 @@ const RegisterPage = () => {
           });
       }
     }
-
- 
   };
 
   const renderRegister = () => {
@@ -192,7 +187,7 @@ const RegisterPage = () => {
             </div>
             <p className="text-red-500 text-center"> {formMsg && formMsg}</p>
             <p className="text-red-500 text-center"> {msg && msg}</p>
-             
+
             <div className="flex justify-center pt-4">
               <button
                 className="bg-purple-600 h-12 w-56 rounded-full text-white"

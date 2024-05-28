@@ -46,7 +46,7 @@ const RewardDetailPage = () => {
       bplus_code: user.bplus_code,
       retailer_name: user.retailer_name,
     };
-    console.log(userData)
+
     setIsRedeemButtonAvailable(false);
     dispatch(getRedeem(userData))
       .unwrap()
@@ -103,7 +103,6 @@ const RewardDetailPage = () => {
   const renderRewardDetails = () => {
     return (
       <div className="p-2 w-screen">
-        {console.log(reward)}
         <div className="bg-white w-full h-92 rounded-2xl overflow-hidden shadow-lg ">
           <div className="flex justify-center items-center    h-full">
             <div className="h-84">

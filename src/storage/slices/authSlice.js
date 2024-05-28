@@ -11,7 +11,7 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (userData, { rejectWithValue }) => {  
-     console.log(userData)
+
     try {
     
       const res = await liffApiInstance.post(`user/register`, userData);
