@@ -15,10 +15,17 @@ import Greeting from "../components/Greeting";
 const RewardPage = () => {
   const { user } = useSelector((state) => state.user);
   const { rewardList } = useSelector((state) => state.reward);
+
   const dispatch = useDispatch();
 
   const [isLoading, setIsLoading] = useState(true);
   const greeting = Greeting();
+
+  // create copy of rewardList because it read only , can't sort.
+  const rewardListSortByPoint =
+    rewardList.length !== 0
+      ? [...rewardList].sort((a, b) => a.require_point - b.require_point)
+      : [];
 
   useEffect(() => {
     console.log(liff.getOS());
@@ -45,7 +52,7 @@ const RewardPage = () => {
   };
 
   const renderItemCardSection = () => {
-    return rewardList.map((item) => (
+    return rewardListSortByPoint.map((item) => (
       <RewardCard key={item.reward_id} item={item} />
     ));
   };
@@ -53,7 +60,6 @@ const RewardPage = () => {
   const renderReward = () => {
     return (
       <div className="h-full p-2">
-  
         {/* {console.log(user)} */}
         <div
           id="Profile"
