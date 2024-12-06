@@ -65,7 +65,7 @@ const RewardDetailPage = () => {
       })
       .catch((err) => {
         if (err) {
-          Alerts.redemptionFail(err.msg);
+          Alerts.redemptionFail(err.msg||"");
         } else {
           Alerts.redemptionFail();
         }
