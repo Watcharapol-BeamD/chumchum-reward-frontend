@@ -52,6 +52,7 @@ const RewardDetailPage = () => {
     dispatch(getRedeem(userData))
       .unwrap()
       .then((res) => {
+        console.log(res);
         if (res.isRedeemSuccess) {
           Alerts.redemptionComplete().then(() => {
             setIsRedeemButtonAvailable(true);
@@ -61,6 +62,15 @@ const RewardDetailPage = () => {
           Alerts.redemptionFail();
           setIsRedeemButtonAvailable(true);
         }
+      })
+      .catch((err) => {
+        if (err) {
+          Alerts.redemptionFail(err.msg);
+        } else {
+          Alerts.redemptionFail();
+        }
+
+        setIsRedeemButtonAvailable(true);
       });
   };
 
