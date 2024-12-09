@@ -24,7 +24,7 @@ const RewardDetailPage = () => {
   const [isRedeemButtonAvailable, setIsRedeemButtonAvailable] = useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
- 
+
   useEffect(() => {
     dispatch(getRewardById(id))
       .unwrap()
@@ -45,6 +45,7 @@ const RewardDetailPage = () => {
       reward_name: reward.name,
       bplus_code: user.bplus_code,
       retailer_name: user.retailer_name,
+      reward_type: reward.reward_type,
     };
 
     setIsRedeemButtonAvailable(false);
@@ -60,6 +61,15 @@ const RewardDetailPage = () => {
           Alerts.redemptionFail();
           setIsRedeemButtonAvailable(true);
         }
+      })
+      .catch((err) => {
+        if (err) {
+          Alerts.redemptionFail(err.msg||"");
+        } else {
+          Alerts.redemptionFail();
+        }
+
+        setIsRedeemButtonAvailable(true);
       });
   };
 

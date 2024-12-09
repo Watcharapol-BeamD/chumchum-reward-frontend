@@ -11,11 +11,11 @@ class Alerts {
     });
   }
 
-  redemptionFail() {
+  redemptionFail(message="เกิดข้อผิดพลาดในแลกรางวัล") {
     return Swal.fire({
       position: "center",
       icon: "error",
-      text: "เกิดข้อผิดพลาดในแลกรางวัล",
+      text: message  ,
       showConfirmButton: false,
       timer: 1500,
     });
