@@ -52,7 +52,6 @@ const RewardDetailPage = () => {
     dispatch(getRedeem(userData))
       .unwrap()
       .then((res) => {
-        console.log(res);
         if (res.isRedeemSuccess) {
           Alerts.redemptionComplete().then(() => {
             setIsRedeemButtonAvailable(true);
