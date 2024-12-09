@@ -211,17 +211,15 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="w-full h-full ">
-      <div
-        className=" h-screen "
-        style={{
-          backgroundRepeat: "no-repeat",
-          backgroundImage: `url(${ChumChumBg}) `,
-          backgroundPosition: "0 -50px",
-        }}
-      >
-        {isLoading ? <OnLoadingScreen /> : renderRegister()}
-      </div>
+    <div
+      className="  "
+      style={{
+        backgroundRepeat: "no-repeat",
+        backgroundImage: `url(${ChumChumBg}) `,
+        backgroundPosition: "0 -50px",
+      }}
+    >
+      {isLoading ? <OnLoadingScreen /> : renderRegister()}
     </div>
   );
 };

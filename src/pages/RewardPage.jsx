@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserData, setUser } from "../storage/slices/userSlice";
 import ChumChumBg from "../assets/chumchum-top-bg.jpg";
-import product1 from "../assets/m150.jpg";
 import { getReward } from "../storage/slices/rewardSlice";
 import RewardCard from "../components/RewardCard";
 import { initializeLIFF, getUser } from "../services/lineUtils";
@@ -92,17 +91,15 @@ const RewardPage = () => {
   };
 
   return (
-    <div className="w-full h-full ">
-      <div
-        className=" h-screen "
-        style={{
-          backgroundRepeat: "no-repeat",
-          backgroundImage: `url(${ChumChumBg}) `,
-          backgroundPosition: "0 -50px",
-        }}
-      >
-        {isLoading ? <OnLoadingScreen /> : renderReward()}
-      </div>
+    <div
+      className="  "
+      style={{
+        backgroundRepeat: "no-repeat",
+        backgroundImage: `url(${ChumChumBg}) `,
+        backgroundPosition: "0 -50px",
+      }}
+    >
+      {isLoading ? <OnLoadingScreen /> : renderReward()}
     </div>
   );
 };
