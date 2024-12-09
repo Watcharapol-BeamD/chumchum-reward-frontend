@@ -12,6 +12,7 @@ import HomePage from "./pages/HomePage";
 import RewardDetailPage from "./pages/RewardDetailPage";
 import EditProfilePage from "./pages/EditProfilePage";
 import AlertPage from "./pages/AlertPage";
+import AppVersion from "./components/AppVersion";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="client/edit_profile" element={<EditProfilePage />} />
         </Route>
       </Routes>
+      {/* <AppVersion/> */}
     </div>
   );
 }
