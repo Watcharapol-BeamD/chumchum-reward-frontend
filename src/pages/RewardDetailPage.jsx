@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import productImage from "../assets/waterpurifier.webp";
 import ChumChumBg from "../assets/chumchum-top-bg.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./../storage/slices/userSlice";
@@ -64,7 +63,7 @@ const RewardDetailPage = () => {
       })
       .catch((err) => {
         if (err) {
-          Alerts.redemptionFail(err.msg||"");
+          Alerts.redemptionFail(err.msg || "");
         } else {
           Alerts.redemptionFail();
         }
@@ -112,9 +111,9 @@ const RewardDetailPage = () => {
 
   const renderRewardDetails = () => {
     return (
-      <div className="p-2 w-screen">
+      <div className="p-2 ">
         <div className="bg-white w-full h-92 rounded-2xl overflow-hidden shadow-lg ">
-          <div className="flex justify-center items-center    h-full">
+          <div className="flex justify-center items-center h-full">
             <div className="h-84">
               {reward.reward_image === null ? (
                 <ImageNotFound />
@@ -164,9 +163,8 @@ const RewardDetailPage = () => {
   };
 
   return (
-    <div className="w-full h-full">
+    <>
       <div
-        className="h-screen"
         style={{
           backgroundRepeat: "no-repeat",
           backgroundImage: `url(${ChumChumBg}) `,
@@ -190,7 +188,7 @@ const RewardDetailPage = () => {
         onConfirm={handleConfirmRedeem}
         onCancel={() => setShowSaveModal(false)}
       />
-    </div>
+    </>
   );
 };
 

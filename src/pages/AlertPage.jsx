@@ -14,18 +14,20 @@ const AlertPage = () => {
 
   const renderAlertPage = () => {
     return (
-        <div className="flex justify-center items-center w-full h-screen bg-white  ">
+      <div className="flex justify-center items-center w-full flex-1 bg-white">
         <div>
           <div className="flex justify-center   ">
             <img className="h-20 w-20 animate-bounce" src={ChumChumIcon} />
           </div>
-          <p className="text-black text-xl font-medium ">กรุณาเข้าใช้งานผ่านทางสมาร์ทโฟน</p>
+          <p className="text-black text-xl font-medium ">
+            กรุณาเข้าใช้งานผ่านทางสมาร์ทโฟน
+          </p>
         </div>
       </div>
     );
   };
 
-  return <div className="w-full h-full"> {renderAlertPage()}</div>;
+  return <> {renderAlertPage()}</>;
 };
 
 export default AlertPage;
